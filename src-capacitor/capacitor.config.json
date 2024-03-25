@@ -1,0 +1,8 @@
+{
+  "appId": "org.capacitor.quasar.app",
+  "appName": "Nasscom Tech",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  }
+}
