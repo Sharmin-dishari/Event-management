@@ -3,8 +3,15 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/ListView.vue") },
-      { path: "", component: () => import("pages/IndexPage.vue") },
+      {
+        path: "",
+        name: "dashboard",
+        component: () => import("pages/ListView.vue"),
+      },
+      {
+        path: "",
+        component: () => import("pages/IndexPage.vue"),
+      },
       {
         path: "event-details",
         name: "event-details",

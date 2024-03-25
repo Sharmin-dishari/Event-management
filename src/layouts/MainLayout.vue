@@ -25,14 +25,27 @@
           </div>
         </q-toolbar-title>
 
-        <q-btn round @click="toggleLeftDrawer" unelevated dense>
+        <q-btn
+          round
+          @click="toggleLeftDrawer"
+          unelevated
+          dense
+          class="bg-grey-5"
+        >
           <q-avatar>
             <img src="/menu.png" />
           </q-avatar>
         </q-btn>
       </q-toolbar>
       <q-toolbar v-else>
-        <q-btn size="16px" icon="chevron_left" round @click="$router.back()" />
+        <q-btn
+          size="16px"
+          icon="chevron_left"
+          round
+          unelevated
+          class="bg-grey-3"
+          @click="$router.push({ name: 'dashboard' })"
+        />
         <q-toolbar-title style="margin-left: -35px" class="text-center"
           >Event Details</q-toolbar-title
         >
@@ -67,39 +80,14 @@ defineOptions({
 
 const linksList = [
   {
-    title: "Docs",
-    caption: "quasar.dev",
-    icon: "school",
+    title: "Events",
+    icon: "calendar_month",
+    name: "dashboard",
   },
   {
-    title: "Github",
-    caption: "github.com/quasarframework",
-    icon: "code",
-  },
-  {
-    title: "Discord Chat Channel",
-    caption: "chat.quasar.dev",
-    icon: "chat",
-  },
-  {
-    title: "Forum",
-    caption: "forum.quasar.dev",
-    icon: "record_voice_over",
-  },
-  {
-    title: "Twitter",
-    caption: "@quasarframework",
-    icon: "rss_feed",
-  },
-  {
-    title: "Facebook",
-    caption: "@QuasarFramework",
-    icon: "public",
-  },
-  {
-    title: "Quasar Awesome",
-    caption: "Community Quasar projects",
-    icon: "favorite",
+    title: "Event Details",
+    icon: "calendar_month",
+    name: "event-details",
   },
 ];
 

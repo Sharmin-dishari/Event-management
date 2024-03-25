@@ -57,18 +57,18 @@
                 </div>
               </div>
             </div>
-            <div class="text-black q-mt-md row justify-between">
-              <div>
+            <q-item class="text-black q-pa-none q-mt-md row justify-between">
+              <q-item-section>
                 <div class="title-font">Nasscom Techonol...</div>
                 <div style="font-size: 9px">
                   Manchester, UK - Etihad Stadium
                 </div>
-              </div>
-              <div class="q-mr-sm">
+              </q-item-section>
+              <q-item-section class="q-mr-sm text-black" side>
                 <div class="title-font">$125</div>
                 <div style="font-size: 9px">1/person</div>
-              </div>
-            </div>
+              </q-item-section>
+            </q-item>
           </section>
         </div>
       </div>
@@ -157,11 +157,9 @@ const users = ref([
   right: 7px;
 }
 .title-font {
-  font-family: Clash Grotesk;
-  font-size: 19.18px;
+  font-size: 17px;
   font-weight: 500;
   line-height: 21.31px;
-  text-align: left;
 }
 
 .date-mark {

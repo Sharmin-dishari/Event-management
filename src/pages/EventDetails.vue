@@ -1,7 +1,7 @@
 <template>
   <q-page padding>
     <div>
-      <div class="container q-mt-md">
+      <div class="container q-mt-md q-mx-sm">
         <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
         <div class="top-right">
           <q-btn icon="bookmark" unelevated dense class="button-bg" />
@@ -37,7 +37,9 @@
           </div>
         </div>
       </div>
-      <div class="title-font q-my-md">Nasscom Technology & Leadership</div>
+      <div class="title-font q-my-md q-px-sm">
+        Nasscom Technology & Leadership
+      </div>
       <div class="q-ma-sm row q-py-md">
         <q-btn icon="calendar_month" unelevated dense class="button-border" />
         <div class="q-ml-md">
@@ -52,19 +54,18 @@
           <div class="text-caption">Manchester, UK - Etihad Stadium</div>
         </div>
       </div>
-      <div class="red-line"></div>
-      <div class="divider div-transparent q-mt-sm"></div>
+      <div class="divider div-transparent q-mt-lg"></div>
       <div class="text-center q-py-md text-h6 text-bold">Event Sponsors</div>
-      <div class="row justify-around flex-center">
-        <img src="public/Indonesia.png" class="image-brand" />
-        <img src="public/Indonesia (1).png" class="image-brand2 q-mt-md" />
-        <img src="public/Indonesia (2).png" class="image-brand3 q-mt-md" />
+      <div class="row justify-between flex-center">
+        <img src="/Indonesia.png" class="image-brand" />
+        <img src="/Indonesia (1).png" class="image-brand2 q-mt-sm" />
+        <img src="/Indonesia (2).png" class="image-brand3 q-mt-sm" />
       </div>
       <div class="divider div-transparent q-mt-xl q-mb-lg"></div>
       <q-item>
         <q-item-section avatar>
           <q-item-label>
-            <img src="image.png" style="border-radius: 15px" />
+            <img src="/user.png" style="border-radius: 15px" />
           </q-item-label>
         </q-item-section>
         <q-item-section>
@@ -215,15 +216,15 @@ const users = ref([
 }
 .image-brand {
   width: 101px;
-  height: 29.98px;
+  height: 31px;
 }
 .image-brand2 {
-  width: 94px;
-  height: 18px;
+  width: 97px;
+  height: 20px;
 }
 .image-brand3 {
-  width: 100px;
-  height: 18px;
+  width: 101px;
+  height: 20px;
 }
 .title-font {
   font-family: Clash Display;
