@@ -1,40 +1,97 @@
 <template>
-  <q-item clickable @click="$router.push({ name: `${props.name}` })">
-    <q-item-section v-if="props.icon" avatar>
-      <q-icon :name="props.icon" />
-    </q-item-section>
-
-    <q-item-section>
-      <q-item-label>{{ props.title }}</q-item-label>
-      <q-item-label caption>{{ props.caption }}</q-item-label>
-    </q-item-section>
-  </q-item>
+  <div>
+    <q-item class="q-pr-none">
+      <div class="q-mt-xl col-grow">
+        <q-avatar size="60px">
+          <img src="/boy.png" />
+        </q-avatar>
+        <div class="text-h6">Madhu Mia</div>
+        <div
+          class="row q-mt-lg q-pa-sm click-event"
+          v-for="(item, index) in navLinks"
+          :key="index"
+          @click="$router.push({ name: `${item.hash}` })"
+        >
+          <div>
+            <q-icon :name="item.icon" size="25px" />
+          </div>
+          <div class="q-ml-md" style="font-size: 16px">{{ item.name }}</div>
+        </div>
+        <div class="row q-mt-md q-ml-sm">
+          <q-toggle
+            size="md"
+            @update:model-value="handleDarkMode"
+            v-model="darkMode"
+            val="dark"
+            class="q-mt-md"
+          />
+          <div style="font-size: 16px; padding-top: 24px">Dark mode off</div>
+        </div>
+      </div>
+      <div style="margin-left: -100px">
+        <img src="/menuside.png" alt="" style="" />
+      </div>
+    </q-item>
+  </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { useQuasar, Dark } from "quasar";
 defineOptions({
   name: "EssentialLink",
 });
-
-const props = defineProps({
-  title: {
-    type: String,
-    required: true,
+const darkMode = ref(false);
+const handleDarkMode = () => {
+  Dark.toggle();
+};
+const navLinks = [
+  {
+    icon: "person_outline",
+    name: "My Profile",
+    hash: "settings",
   },
-
-  caption: {
-    type: String,
-    default: "",
+  {
+    icon: "maps_ugc",
+    name: "Message",
+    hash: "chat-index",
   },
-
-  link: {
-    type: String,
-    default: "#",
+  {
+    icon: "event",
+    name: "Calendar",
+    hash: "dashboard",
   },
-
-  icon: {
-    type: String,
-    default: "",
+  {
+    icon: "mail_outline",
+    name: "Contact Us",
+    hash: "dashboard",
   },
-});
+  {
+    icon: "settings",
+    name: "Settings",
+    hash: "settings",
+  },
+  {
+    icon: "help_outline",
+    name: "Helps & FAQs",
+    hash: "settings",
+  },
+  {
+    icon: "login",
+    name: "Sign Out",
+    hash: "log-out",
+  },
+];
 </script>
+<style>
+.click-event-blue:active,
+.click-event-blue:focus {
+  background-color: #efeded80;
+  border-radius: 20px;
+  transition: background-color 3s ease;
+}
+.click-event:hover {
+  background-color: #dad7d780;
+  border-radius: 20px;
+}
+</style>

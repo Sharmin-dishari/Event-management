@@ -5,6 +5,11 @@ const routes = [
     children: [
       {
         path: "",
+        name: "on-board",
+        component: () => import("pages/OnboardIndex.vue"),
+      },
+      {
+        path: "/dashboard",
         name: "dashboard",
         component: () => import("pages/ListView.vue"),
       },

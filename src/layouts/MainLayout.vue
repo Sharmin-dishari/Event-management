@@ -52,15 +52,15 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered side="right">
+    <q-drawer
+      width="350"
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      side="right"
+    >
       <q-list>
-        <q-item-label header> Essential Links </q-item-label>
-
-        <EssentialLink
-          v-for="link in linksList"
-          :key="link.title"
-          v-bind="link"
-        />
+        <EssentialLink />
       </q-list>
     </q-drawer>
 
