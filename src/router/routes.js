@@ -7,20 +7,81 @@ const routes = [
         path: "",
         name: "on-board",
         component: () => import("pages/OnboardIndex.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
+      },
+      {
+        path: "/sign-index",
+        name: "sign-index",
+        component: () => import("pages/SignIndex.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
+      },
+      {
+        path: "/sign-up",
+        name: "sign-up",
+        component: () => import("pages/SignUp.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
+      },
+      {
+        path: "/book-ticket",
+        name: "book-ticket",
+        component: () => import("pages/BookTicket.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: true,
+        },
+      },
+      {
+        path: "/my-ticket",
+        name: "my-ticket",
+        component: () => import("pages/TicketDetails.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: true,
+        },
       },
       {
         path: "/dashboard",
         name: "dashboard",
         component: () => import("pages/ListView.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
+      },
+      {
+        path: "/event-list",
+        name: "event-list",
+        component: () => import("pages/EventList.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
       },
       {
         path: "",
         component: () => import("pages/IndexPage.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
       },
       {
         path: "event-details",
         name: "event-details",
         component: () => import("pages/EventDetails.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: true,
+        },
       },
     ],
   },

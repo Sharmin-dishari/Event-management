@@ -130,7 +130,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { useCounterStore } from "../stores/example-store";
+const commonStore = useCounterStore();
+onMounted(() => {
+  commonStore.pageTitle = "Event Details";
+});
 const users = ref([
   {
     id: 1,

@@ -129,7 +129,7 @@ export default {
     #ffffff 57.69%
   );
 }
-d .black-gradiant {
+.black-gradiant {
   height: 100px;
   margin-top: -70px;
   z-index: 1;

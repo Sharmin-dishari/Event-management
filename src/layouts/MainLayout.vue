@@ -2,10 +2,10 @@
   <q-layout view="lHh Lpr lFf">
     <q-header
       unelevated
-      class="q-pa-sm bg-white text-black q-pt-md"
-      :class="$route.name !== 'event-details' ? 'bg-grey-2' : 'bg-white'"
+      class="q-pa-sm q-pt-md"
+      :class="!$q.dark.isActive ? 'bg-white text-black' : 'bg-dark text-white'"
     >
-      <q-toolbar v-if="$route.name !== 'event-details'">
+      <q-toolbar v-if="!$route.meta.isBack">
         <q-avatar size="42px">
           <img src="/boy.png" />
         </q-avatar>
@@ -43,11 +43,14 @@
           icon="chevron_left"
           round
           unelevated
-          class="bg-grey-3"
+          :class="!$q.dark.isActive ? 'bg-grey-3 text-black' : 'bg-grey-10'"
           @click="$router.push({ name: 'dashboard' })"
         />
-        <q-toolbar-title style="margin-left: -35px" class="text-center"
-          >Event Details</q-toolbar-title
+        <q-toolbar-title
+          :class="!$q.dark.isActive ? 'text-black' : 'text-grey-3'"
+          style="margin-left: -35px"
+          class="text-center"
+          >{{ commonStore.pageTitle }}</q-toolbar-title
         >
       </q-toolbar>
     </q-header>
@@ -72,8 +75,9 @@
 
 <script setup>
 import { ref } from "vue";
+import { useCounterStore } from "../stores/example-store";
 import EssentialLink from "components/EssentialLink.vue";
-
+const commonStore = useCounterStore();
 defineOptions({
   name: "MainLayout",
 });

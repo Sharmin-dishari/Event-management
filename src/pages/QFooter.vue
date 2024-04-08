@@ -7,7 +7,7 @@
         unelevated
         dense
         icon="search"
-        class="bg-white q-ml-sm"
+        class="bg-white text-black q-ml-sm"
         size="18px"
       />
       <q-btn
@@ -15,7 +15,7 @@
         unelevated
         dense
         icon="event"
-        class="bg-white q-mx-md"
+        class="bg-white text-black q-mx-md"
         size="18px"
       />
       <q-btn round unelevated dense class="q-mr-sm">
@@ -25,7 +25,7 @@
       </q-btn>
     </div>
     <div class="person-icon row flex-center">
-      <q-icon name="perm_identity" size="30px" />
+      <q-icon name="perm_identity" size="30px" class="text-black" />
     </div>
   </div>
 </template>
