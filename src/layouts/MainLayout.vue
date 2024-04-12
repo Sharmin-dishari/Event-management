@@ -44,7 +44,7 @@
           round
           unelevated
           :class="!$q.dark.isActive ? 'bg-grey-3 text-black' : 'bg-grey-10'"
-          @click="$router.push({ name: 'dashboard' })"
+          @click="$router.back()"
         />
         <q-toolbar-title
           :class="!$q.dark.isActive ? 'text-black' : 'text-grey-3'"

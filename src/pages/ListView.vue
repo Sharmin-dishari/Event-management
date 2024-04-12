@@ -27,6 +27,7 @@
               selected: optionSelected(item.label),
               'dark-selected': $q.dark.isActive && optionSelected(item.label),
               btn: !optionSelected(item.label),
+              darkbtn: $q.dark.isActive && !optionSelected(item.label),
             }"
             @click="selectedEvent = item.label"
           >
@@ -86,11 +87,15 @@ const optionSelected = (item) => {
   padding: 7px 10px;
   border: 1px solid rgba(15, 15, 15, 0.18);
 }
+.darkbtn {
+  background: #1d2531;
+  color: white;
+  border: 1px solid rgba(15, 15, 15, 0.18);
+}
 .btn {
   height: 35px;
   top: 196px;
   border-radius: 24px;
-  color: #101211;
   opacity: 0px;
   padding: 5px 15px;
   border: 1px solid #96969640;

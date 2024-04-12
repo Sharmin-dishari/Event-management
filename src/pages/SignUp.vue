@@ -6,7 +6,7 @@
       <q-card-section>
         <div>
           <q-input
-            v-model="name"
+            v-model="form.name"
             class="itc-input required"
             stack-label
             outlined
@@ -19,7 +19,7 @@
             <template #prepend> <q-icon name="person_outline" /></template>
           </q-input>
           <q-input
-            v-model="email"
+            v-model="form.email"
             class="itc-input required"
             stack-label
             outlined
@@ -35,7 +35,7 @@
             <template #prepend> <q-icon name="email" /></template>
           </q-input>
           <q-input
-            v-model="password"
+            v-model="form.password"
             class="itc-input required"
             stack-label
             outlined
@@ -56,7 +56,7 @@
             </template>
           </q-input>
           <q-input
-            v-model="confirm_password"
+            v-model="form.confirm_password"
             class="itc-input required"
             stack-label
             outlined
@@ -80,9 +80,9 @@
       </q-card-section>
       <q-card-actions class="q-pt-none" align="center">
         <div class="text-center q-py-md">
-          <q-btn class="book-btn" rounded>
+          <q-btn class="book-btn" rounded type="submit">
             <div class="row text-white">
-              <div class="q-mt-xs text-bold">Sign In</div>
+              <div class="q-mt-xs text-bold">Sign Up</div>
               <div class="q-ml-md">
                 <q-btn
                   round
@@ -98,48 +98,63 @@
           </q-btn>
         </div>
       </q-card-actions>
-
-      <q-card-section class="q-mx-xl">
-        <div class="text-center q-mb-lg">OR</div>
-        <div class="q-pa-none">
-          <q-btn
-            unelevated
-            no-caps
-            outline
-            @click="handleSocialLogin('google')"
-            class="full-width q-py-md"
-          >
-            <q-icon left size="2em" name="img:/google.png" />
-            <div class="placeholder">Sign in with Google</div>
-          </q-btn>
-        </div>
-        <div class="q-pa-none q-mt-md">
-          <q-btn
-            unelevated
-            no-caps
-            outline
-            @click="handleSocialLogin('google')"
-            class="full-width q-py-md"
-          >
-            <q-icon left size="2em" name="img:/facebook.png" />
-            <div class="placeholder">Sign in with Facebook</div>
-          </q-btn>
-        </div>
-      </q-card-section>
-      <div
-        class="text-caption text-center q-py-md cursor-pointer"
-        @click="$router.push({ name: 'sign-index' })"
-      >
-        Already have an account?
-        <span class="text-primary q-ml-sm">Signin</span>
-      </div>
     </q-form>
+    <q-card-section class="q-mx-xl">
+      <div class="text-center q-mb-lg">OR</div>
+      <div class="q-pa-none">
+        <q-btn
+          unelevated
+          no-caps
+          outline
+          @click="handleSocialLogin('google')"
+          class="full-width q-py-md"
+        >
+          <q-icon left size="2em" name="img:/google.png" />
+          <div class="placeholder">Sign in with Google</div>
+        </q-btn>
+      </div>
+      <div class="q-pa-none q-mt-md">
+        <q-btn
+          unelevated
+          no-caps
+          outline
+          @click="handleSocialLogin('google')"
+          class="full-width q-py-md"
+        >
+          <q-icon left size="2em" name="img:/facebook.png" />
+          <div class="placeholder">Sign in with Facebook</div>
+        </q-btn>
+      </div>
+    </q-card-section>
+    <div
+      class="text-caption text-center q-py-md cursor-pointer"
+      @click="$router.push({ name: 'sign-index' })"
+    >
+      Already have an account?
+      <span class="text-primary q-ml-sm">Signin</span>
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
-const darkMode = ref(false);
+import { useRouter } from "vue-router";
+const confirm_password = ref(false);
+const form = ref({
+  email: "",
+  name: "",
+  password: "",
+  confirm_password: "",
+});
+const router = useRouter();
+const handleLogin = () => {
+  router.push({ name: "dashboard" });
+};
+const emailValidationRegex =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validateEmail = (val) => {
+  return emailValidationRegex.test(val);
+};
 </script>
 
 <style>

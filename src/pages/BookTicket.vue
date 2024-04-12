@@ -4,7 +4,7 @@
       <q-card-section>
         <div>
           <q-input
-            v-model="name"
+            v-model="form.name"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -13,7 +13,7 @@
             <template #prepend> <q-icon name="lock" /></template>
           </q-input>
           <q-input
-            v-model="email"
+            v-model="form.email"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -25,7 +25,7 @@
             <template #prepend> <q-icon name="email" /></template>
           </q-input>
           <q-select
-            v-model="gender"
+            v-model="form.gender"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -36,7 +36,7 @@
             <template #prepend> <q-icon name="people" /></template>
           </q-select>
           <q-input
-            v-model="contact"
+            v-model="form.contact"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -45,7 +45,7 @@
             <template #prepend> <q-icon name="call" /></template>
           </q-input>
           <q-input
-            v-model="diet"
+            v-model="form.diet"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -55,7 +55,7 @@
             <template #prepend><q-icon name="coffee" /></template>
           </q-input>
           <q-input
-            v-model="diet"
+            v-model="form.group"
             class="itc-input required"
             stack-label
             outlined
@@ -69,7 +69,7 @@
         <q-item class="row q-px-none">
           <q-toggle
             size="md"
-            @update:model-value="handleDarkMode"
+            @update:model-value="isAgree = !isAgree"
             v-model="isAgree"
             val="dark"
           />
@@ -80,7 +80,7 @@
       </q-card-section>
       <q-card-actions class="q-pt-none" align="center">
         <div class="text-center q-py-md">
-          <q-btn class="book-btn" rounded>
+          <q-btn class="book-btn" rounded type="submit">
             <div class="row text-white">
               <div class="q-mt-xs text-bold">Book A Ticket</div>
               <div class="q-ml-md">
@@ -89,7 +89,6 @@
                   icon="east"
                   size="sm"
                   text-black
-                  @click="$router.push({ name: 'my-ticket' })"
                   unelevated
                   color="red-5"
                   class="text-white"
@@ -107,10 +106,22 @@
 import { onMounted, ref } from "vue";
 import { useCounterStore } from "../stores/example-store";
 const commonStore = useCounterStore();
+import { useRouter } from "vue-router";
 const isAgree = ref(true);
+const form = ref({
+  name: "",
+  email: "",
+  gender: "",
+  diet: "",
+  group: "",
+});
 onMounted(() => {
   commonStore.pageTitle = "Book Ticket";
 });
+const router = useRouter();
+const handleLogin = () => {
+  router.push({ name: "my-ticket" });
+};
 </script>
 
 <style>

@@ -230,7 +230,7 @@ hr.dashed {
   background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
   color: #f1f1f1;
   border-radius: 0 0 20px 20px;
-  width: 100%;
+  width: 95%;
   padding: 40px;
 }
 .container {

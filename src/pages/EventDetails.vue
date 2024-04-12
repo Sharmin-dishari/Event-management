@@ -62,10 +62,13 @@
       </div>
       <div class="divider div-transparent q-mt-lg"></div>
       <div class="text-center q-py-md text-h6 text-bold">Event Sponsors</div>
-      <div class="row justify-between flex-center">
+      <div class="row justify-between flex-center q-px-sm">
         <img src="/Indonesia.png" class="image-brand" />
         <img src="/Indonesia (1).png" class="image-brand2 q-mt-sm" />
-        <img src="/Indonesia (2).png" class="image-brand3 q-mt-sm" />
+        <img
+          :src="$q.dark.isActive ? '/Indonesia.svg' : '/Indonesia (2).png'"
+          class="image-brand3 q-mt-sm"
+        />
       </div>
       <div class="divider div-transparent q-mt-xl q-mb-lg"></div>
       <q-item>
@@ -114,7 +117,11 @@
         </div>
       </div>
       <div class="text-center q-py-md">
-        <q-btn class="book-btn" rounded>
+        <q-btn
+          class="book-btn"
+          rounded
+          @click="$router.push({ name: 'book-ticket' })"
+        >
           <div class="row text-white">
             <div class="q-mt-xs text-bold">Book ticket- $125</div>
             <div class="q-ml-md">
@@ -231,16 +238,13 @@ const users = ref([
   );
 }
 .image-brand {
-  width: 101px;
-  height: 31px;
+  width: 31%;
 }
 .image-brand2 {
-  width: 97px;
-  height: 20px;
+  width: 30%;
 }
 .image-brand3 {
-  width: 101px;
-  height: 20px;
+  width: 31%;
 }
 .title-font {
   font-family: Clash Display;

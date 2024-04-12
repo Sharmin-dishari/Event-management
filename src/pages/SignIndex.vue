@@ -11,7 +11,7 @@
       <q-card-section>
         <div>
           <q-input
-            v-model="email"
+            v-model="form.email"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -27,7 +27,7 @@
             <template #prepend> <q-icon name="email" /></template>
           </q-input>
           <q-input
-            v-model="password"
+            v-model="form.password"
             class="itc-input required"
             stack-label
             outlined
@@ -66,7 +66,7 @@
       <q-card-actions class="q-pt-none" align="center">
         <div class="text-center q-py-md">
           <q-btn class="book-btn" rounded>
-            <div class="row text-white">
+            <div class="row text-white" type="submit">
               <div class="q-mt-xs text-bold">Sign In</div>
               <div class="q-ml-md">
                 <q-btn
@@ -83,7 +83,8 @@
           </q-btn>
         </div>
       </q-card-actions>
-
+    </q-form>
+    <div class="bg-color">
       <q-card-section class="q-mx-xl">
         <div class="text-center q-mb-lg">OR</div>
         <div class="q-pa-none">
@@ -118,13 +119,28 @@
         Don't have an account?
         <span class="text-primary q-ml-sm">Sign up</span>
       </div>
-    </q-form>
+    </div>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 const darkMode = ref(false);
+const rememberPass = ref(false);
+const form = ref({
+  email: null,
+  password: null,
+});
+const router = useRouter();
+const handleLogin = () => {
+  router.push({ name: "on-board" });
+};
+const emailValidationRegex =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validateEmail = (val) => {
+  return emailValidationRegex.test(val);
+};
 </script>
 
 <style>

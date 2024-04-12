@@ -39,6 +39,7 @@
           v-model="slide"
           arrows
           navigation
+          height="250px"
           infinite
         >
           <q-carousel-slide

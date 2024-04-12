@@ -4,7 +4,7 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
-        path: "",
+        path: "/on-board",
         name: "on-board",
         component: () => import("pages/OnboardIndex.vue"),
         meta: {
@@ -13,7 +13,7 @@ const routes = [
         },
       },
       {
-        path: "/sign-index",
+        path: "",
         name: "sign-index",
         component: () => import("pages/SignIndex.vue"),
         meta: {
@@ -61,14 +61,6 @@ const routes = [
         path: "/event-list",
         name: "event-list",
         component: () => import("pages/EventList.vue"),
-        meta: {
-          requiresAuth: false,
-          isBack: false,
-        },
-      },
-      {
-        path: "",
-        component: () => import("pages/IndexPage.vue"),
         meta: {
           requiresAuth: false,
           isBack: false,

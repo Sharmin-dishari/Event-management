@@ -18,9 +18,14 @@
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container">
         <div v-for="item in 4" :key="item.id" class="option">
-          <section class="art-event-gallery">
+          <section
+            class="art-event-gallery"
+            :class="
+              $q.dark.isActive ? 'dark-card text-white' : 'bg-white text-black'
+            "
+          >
             <div class="row justify-between q-mt-sm">
-              <div class="text-h6 text-black">Nasscom Tech</div>
+              <div class="text-h6">Nasscom Tech</div>
               <q-btn
                 round
                 unelevated
@@ -57,14 +62,14 @@
                 </div>
               </div>
             </div>
-            <q-item class="text-black q-pa-none q-mt-md row justify-between">
+            <q-item class="q-pa-none q-mt-md row justify-between">
               <q-item-section>
                 <div class="title-font">Nasscom Techonol...</div>
                 <div style="font-size: 9px">
                   Manchester, UK - Etihad Stadium
                 </div>
               </q-item-section>
-              <q-item-section class="q-mr-sm text-black" side>
+              <q-item-section class="q-mr-sm" side>
                 <div class="title-font">$125</div>
                 <div style="font-size: 9px">1/person</div>
               </q-item-section>
@@ -74,7 +79,12 @@
       </div>
     </div>
     <div class="row justify-between">
-      <div class="q-mb-sm q-mt-md">News & Feed</div>
+      <div
+        class="q-mb-sm q-mt-md cursor-pointer"
+        @click="$router.push({ name: 'news-feed' })"
+      >
+        News & Feed
+      </div>
       <div class="row">
         <span class="q-mt-sm">Sort all</span>
         <q-select
@@ -91,9 +101,14 @@
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container">
         <div v-for="item in 4" :key="item.id" class="option">
-          <section class="vedio-event">
+          <section
+            class="vedio-event"
+            :class="
+              $q.dark.isActive ? 'dark-card text-white' : 'bg-white text-black'
+            "
+          >
             <div class="row justify-between q-mt-sm">
-              <div class="text-black">Art event gallary</div>
+              <div>Art event gallary</div>
               <q-btn
                 round
                 unelevated
@@ -193,15 +208,16 @@ const users = ref([
   position: relative; /* This allows us to position the button relatively inside the container */
   border-radius: 25px;
   width: 260px;
-  background: white;
   height: 319px;
   padding: 10px;
   opacity: 0px;
 }
+.dark-card {
+  background: #1d2531;
+}
 .vedio-event {
   width: 164.09px;
   height: 189px;
-  background-color: white;
   border: 1px solid #ddd;
   padding: 10px;
   position: relative;

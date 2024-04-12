@@ -1,5 +1,5 @@
 <template>
-  <q-page padding>
+  <q-page padding class="q-py-lg">
     <div v-for="(item, index) in 4" :key="index">
       <div class="row justify-between">
         <div class="q-ml-md row">
@@ -38,7 +38,9 @@
           animated
           v-model="slide"
           arrows
+          height="250px"
           navigation
+          @click="$router.push({ name: 'news-details' })"
           infinite
         >
           <q-carousel-slide
@@ -61,10 +63,11 @@
       </div>
       <div class="row justify-between">
         <div class="row">
-          <q-btn icon="favorite_border" />
-          <q-btn icon="maps_ugc" style="rotate: 270deg" />
+          <q-btn round icon="favorite_border" />
+          <q-btn round icon="maps_ugc" style="rotate: 270deg" />
           <q-btn
             icon="send"
+            round
             @click="$router.push({ name: 'news-details' })"
             style="rotate: 320deg"
           />
