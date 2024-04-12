@@ -1,6 +1,8 @@
 <template>
   <q-page>
-    <div class="q-pa-md"><q-icon name="arrow_back" size="md" /></div>
+    <div class="q-pa-md cursor-pointer" @click="$router.back()">
+      <q-icon name="arrow_back" size="md" />
+    </div>
     <div class="q-px-md text-h6">Sign up</div>
     <q-form @submit="handleLogin">
       <q-card-section>
@@ -14,7 +16,7 @@
             type="text"
             clearable
             clear-icon="close"
-            :rules="[(val) => !!val || 'Email is required']"
+            :rules="[(val) => !!val || 'Name is required']"
           >
             <template #prepend> <q-icon name="person_outline" /></template>
           </q-input>
@@ -61,7 +63,7 @@
             stack-label
             outlined
             placeholder="Confirm password"
-            :type="isPwd ? 'password' : 'text'"
+            :type="confirm_password ? 'password' : 'text'"
             :rules="[
               (val) => !!val || 'Password is required',
               (val) => val.length >= 6 || 'Minimum 6 characters required',
@@ -99,7 +101,7 @@
         </div>
       </q-card-actions>
     </q-form>
-    <q-card-section class="q-mx-xl">
+    <q-card-section class="q-mx-lg">
       <div class="text-center q-mb-lg">OR</div>
       <div class="q-pa-none">
         <q-btn
@@ -139,7 +141,8 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-const confirm_password = ref(false);
+const confirm_password = ref(true);
+const isPwd = ref(true);
 const form = ref({
   email: "",
   name: "",

@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="container q-mt-md q-mx-sm bg-card" style="border-radius: 20px">
+    <div class="container q-mt-md q-mx-sm" style="border-radius: 20px">
       <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
       <div class="content">
         <div class="bottom-left">
@@ -62,7 +62,7 @@
         </div>
       </div>
     </div>
-    <hr class="dashed q-mx-lg q-mt-lg" />
+    <hr class="dashed q-mx-lg q-mt-xl" />
     <q-card-actions class="q-pt-none" align="center">
       <div class="text-center q-py-md">
         <q-btn class="book-btn" rounded>
@@ -140,7 +140,7 @@ const users = ref([
   text-align: left;
 }
 hr.dashed {
-  border-top: 3px dashed #bbb;
+  border-top: 2px dashed #bbb;
 }
 .divider {
   position: relative;
@@ -230,7 +230,7 @@ hr.dashed {
   background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
   color: #f1f1f1;
   border-radius: 0 0 20px 20px;
-  width: 95%;
+  width: 100%;
   padding: 40px;
 }
 .container {

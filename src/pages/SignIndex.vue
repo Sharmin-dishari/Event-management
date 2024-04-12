@@ -54,13 +54,13 @@
           <div class="row">
             <q-toggle
               size="md"
-              @update:model-value="handleDarkMode"
+              @update:model-value="darkMode = !darkMode"
               v-model="darkMode"
               val="dark"
             />
             <div class="q-mt-sm">Remember Me</div>
           </div>
-          <div class="q-mt-sm">Forgot Password</div>
+          <div class="q-mt-sm cursor-pointer">Forgot Password</div>
         </div>
       </q-card-section>
       <q-card-actions class="q-pt-none" align="center">
@@ -85,7 +85,7 @@
       </q-card-actions>
     </q-form>
     <div class="bg-color">
-      <q-card-section class="q-mx-xl">
+      <q-card-section class="q-mx-lg">
         <div class="text-center q-mb-lg">OR</div>
         <div class="q-pa-none">
           <q-btn
@@ -127,6 +127,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 const darkMode = ref(false);
+const isPwd = ref(true);
 const rememberPass = ref(false);
 const form = ref({
   email: null,
