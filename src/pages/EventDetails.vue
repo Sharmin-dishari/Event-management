@@ -7,7 +7,13 @@
           <q-btn icon="bookmark" unelevated dense class="button-bg" />
         </div>
         <div class="top-left">
-          <q-btn icon="share" unelevated dense class="button-bg" />
+          <q-btn
+            icon="share"
+            @click="inviteFrnds = true"
+            unelevated
+            dense
+            class="button-bg"
+          />
         </div>
         <div class="content">
           <div class="bottom-left">
@@ -126,16 +132,21 @@
         </q-btn>
       </div>
     </div>
+    <q-dialog v-model="inviteFrnds" full-width>
+      <InviteFriends />
+    </q-dialog>
   </q-page>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
+import InviteFriends from "../components/InviteFriends.vue";
 const commonStore = useCounterStore();
 onMounted(() => {
   commonStore.pageTitle = "Event Details";
 });
+const inviteFrnds = ref(false);
 const users = ref([
   {
     id: 1,

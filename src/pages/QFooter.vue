@@ -1,5 +1,8 @@
 <template>
-  <div class="foot-btn row flex-center justify-around">
+  <div
+    class="foot-btn row flex-center justify-around"
+    :style="$q.dark.isActive ? 'background: #1d2531' : 'background: white'"
+  >
     <ToggoleBtn />
     <div class="mid-btn row flex-center">
       <q-btn
@@ -36,7 +39,6 @@ import ToggoleBtn from "./ToggoleBtn.vue";
 
 <style>
 .foot-btn {
-  background: white;
   height: 71px;
   border-radius: 90px;
   opacity: 0px;

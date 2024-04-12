@@ -1,5 +1,5 @@
 <template>
-  <q-page padding class="bg-grey-2">
+  <q-page padding>
     <div class="row q-gutter-x-sm q-px-sm">
       <div class="col-grow q-mt-sm" style="border-radius: 12px">
         <q-input
@@ -25,6 +25,7 @@
           <button
             :class="{
               selected: optionSelected(item.label),
+              'dark-selected': $q.dark.isActive && optionSelected(item.label),
               btn: !optionSelected(item.label),
             }"
             @click="selectedEvent = item.label"
@@ -103,6 +104,16 @@ const optionSelected = (item) => {
   padding: 5px 15px;
   background: #101211;
   border: 1px solid #101211;
+}
+.dark-selected {
+  height: 35px;
+  top: 196px;
+  border-radius: 24px;
+  opacity: 0px;
+  color: #ffffff;
+  padding: 5px 15px;
+  background: rgb(211, 15, 15);
+  border: rgb(211, 15, 15);
 }
 .option {
   display: inline-block;

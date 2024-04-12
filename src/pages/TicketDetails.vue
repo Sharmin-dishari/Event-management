@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="container q-mt-md q-mx-sm">
+    <div class="container q-mt-md q-mx-sm bg-card" style="border-radius: 20px">
       <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
       <div class="content">
         <div class="bottom-left">
@@ -24,35 +24,45 @@
         </div>
       </div>
     </div>
-    <div class="row q-pa-sm justify-between">
-      <div class="q-mt-sm">
-        <div>Name</div>
-        <div>Madhu Mia</div>
+    <div
+      class="q-px-md bg-card q-mx-sm"
+      style="
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        margin-top: -15px;
+      "
+    >
+      <div class="row q-pa-sm q-pt-md justify-between">
+        <div>
+          <div class="q-mt-sm">Name</div>
+          <div class="text-bold text-h6">Madhu Mia</div>
+        </div>
+        <div>
+          <qrcode-vue value="event-details/id" :size="80" level="H" />
+        </div>
       </div>
-      <div>
-        <qrcode-vue value="event-details/id" :size="80" level="H" />
+      <div class="row q-pa-sm justify-between">
+        <div class="q-mt-sm">
+          <div>Date</div>
+          <div class="text-bold text-h6">23 Mar 2024</div>
+        </div>
+        <div class="q-mt-sm">
+          <div class="text-right">Time</div>
+          <div class="text-bold text-h6">08:00 PM</div>
+        </div>
+      </div>
+      <div class="row q-pa-sm justify-between">
+        <div class="q-mt-sm">
+          <div>Section</div>
+          <div class="text-bold text-h6">A1</div>
+        </div>
+        <div class="q-mt-sm">
+          <div>Seat</div>
+          <div class="text-bold text-h6">175</div>
+        </div>
       </div>
     </div>
-    <div class="row q-pa-sm justify-between">
-      <div class="q-mt-sm">
-        <div>Date</div>
-        <div>23 Mar 2024</div>
-      </div>
-      <div class="q-mt-sm">
-        <div>Time</div>
-        <div>08:00 PM</div>
-      </div>
-    </div>
-    <div class="row q-pa-sm justify-between">
-      <div class="q-mt-sm">
-        <div>Section</div>
-        <div>A1</div>
-      </div>
-      <div class="q-mt-sm">
-        <div>Seat</div>
-        <div>175</div>
-      </div>
-    </div>
+    <hr class="dashed q-mx-lg q-mt-lg" />
     <q-card-actions class="q-pt-none" align="center">
       <div class="text-center q-py-md">
         <q-btn class="book-btn" rounded>
@@ -73,6 +83,7 @@
         </q-btn>
       </div>
     </q-card-actions>
+
     <QFooter class="footer" />
   </q-page>
 </template>
@@ -118,11 +129,18 @@ const users = ref([
   background: rgb(217, 220, 238);
   color: rgba(86, 105, 255, 1);
 }
+.bg-card {
+  background: #1d2531;
+  padding: 5px 10px;
+}
 .header-title {
   font-size: 18px;
   font-weight: 500;
   line-height: 34px;
   text-align: left;
+}
+hr.dashed {
+  border-top: 3px dashed #bbb;
 }
 .divider {
   position: relative;
@@ -223,7 +241,7 @@ const users = ref([
 .bottom-right {
   position: absolute;
   bottom: 15px;
-  right: 10px;
+  right: 30px;
 }
 .bookmark-button {
   position: absolute;

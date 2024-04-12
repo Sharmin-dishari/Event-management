@@ -106,7 +106,6 @@
             </div>
 
             <div class="container q-mt-md">
-              <!-- <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" /> -->
               <q-video
                 :ratio="16 / 13"
                 style="border-radius: 12px"

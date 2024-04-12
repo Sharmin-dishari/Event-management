@@ -70,7 +70,7 @@
           <q-toggle
             size="md"
             @update:model-value="handleDarkMode"
-            v-model="darkMode"
+            v-model="isAgree"
             val="dark"
           />
           <div class="q-mt-sm">
@@ -89,6 +89,7 @@
                   icon="east"
                   size="sm"
                   text-black
+                  @click="$router.push({ name: 'my-ticket' })"
                   unelevated
                   color="red-5"
                   class="text-white"
@@ -103,9 +104,10 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import { useCounterStore } from "../stores/example-store";
 const commonStore = useCounterStore();
+const isAgree = ref(true);
 onMounted(() => {
   commonStore.pageTitle = "Book Ticket";
 });

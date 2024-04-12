@@ -83,6 +83,24 @@ const routes = [
           isBack: true,
         },
       },
+      {
+        path: "news-feed",
+        name: "news-feed",
+        component: () => import("pages/NewsFeed.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: true,
+        },
+      },
+      {
+        path: "news-details",
+        name: "news-details",
+        component: () => import("pages/NewsDetails.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: true,
+        },
+      },
     ],
   },
 
