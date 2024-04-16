@@ -1,89 +1,91 @@
 <template>
   <q-page>
-    <div class="container q-mt-md q-mx-sm" style="border-radius: 20px">
-      <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
-      <div class="content">
-        <div class="bottom-left">
-          <div class="text-bold text-h6" style="margin-left: -40px">
-            Nascom Tech
-          </div>
-          <div class="avatar-group">
-            <div
-              class="avatar"
-              v-for="(user, index) in users?.slice(0, 3)"
-              :key="index"
-            >
-              <img :src="user.avatar" />
+    <div style="margin-bottom: 60px">
+      <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
+        <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
+        <div class="content">
+          <div class="bottom-left">
+            <div class="text-bold text-h6" style="margin-left: -40px">
+              Nascom Tech
             </div>
-            <div class="q-mt-sm q-pl-sm">10+ interested</div>
-          </div>
-        </div>
-        <div class="bottom-right">
-          <div class="text-bold text-h6">$125</div>
-          <div style="font-size: 9px">1/person</div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="q-px-md bg-card q-mx-sm"
-      style="
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        margin-top: -15px;
-      "
-    >
-      <div class="row q-pa-sm q-pt-md justify-between">
-        <div>
-          <div class="q-mt-sm">Name</div>
-          <div class="text-bold text-h6">Madhu Mia</div>
-        </div>
-        <div>
-          <qrcode-vue value="event-details/id" :size="80" level="H" />
-        </div>
-      </div>
-      <div class="row q-pa-sm justify-between">
-        <div class="q-mt-sm">
-          <div>Date</div>
-          <div class="text-bold text-h6">23 Mar 2024</div>
-        </div>
-        <div class="q-mt-sm">
-          <div class="text-right">Time</div>
-          <div class="text-bold text-h6">08:00 PM</div>
-        </div>
-      </div>
-      <div class="row q-pa-sm justify-between">
-        <div class="q-mt-sm">
-          <div>Section</div>
-          <div class="text-bold text-h6">A1</div>
-        </div>
-        <div class="q-mt-sm">
-          <div>Seat</div>
-          <div class="text-bold text-h6">175</div>
-        </div>
-      </div>
-    </div>
-    <hr class="dashed q-mx-lg q-mt-xl" />
-    <q-card-actions class="q-pt-none" align="center">
-      <div class="text-center q-py-md">
-        <q-btn class="book-btn" rounded>
-          <div class="row text-white">
-            <div class="q-mt-xs text-bold">Save as Image</div>
-            <div class="q-ml-md">
-              <q-btn
-                round
-                icon="east"
-                size="sm"
-                text-black
-                unelevated
-                color="red-5"
-                class="text-white"
-              />
+            <div class="avatar-group">
+              <div
+                class="avatar"
+                v-for="(user, index) in users?.slice(0, 3)"
+                :key="index"
+              >
+                <img :src="user.avatar" />
+              </div>
+              <div class="q-mt-sm q-pl-sm">10+ interested</div>
             </div>
           </div>
-        </q-btn>
+          <div class="bottom-right">
+            <div class="text-bold text-h6">$125</div>
+            <div style="font-size: 9px">1/person</div>
+          </div>
+        </div>
       </div>
-    </q-card-actions>
-
+      <div
+        class="q-px-md q-mx-sm"
+        :class="$q.dark.isActive ? 'bg-card' : 'bg-grey-2'"
+        style="
+          border-bottom-left-radius: 10px;
+          border-bottom-right-radius: 10px;
+          margin-top: -15px;
+        "
+      >
+        <div class="row q-pa-sm q-pt-md justify-between">
+          <div>
+            <div class="q-mt-sm">Name</div>
+            <div class="text-bold text-h6">Madhu Mia</div>
+          </div>
+          <div class="q-mt-sm">
+            <qrcode-vue value="event-details/id" :size="80" level="H" />
+          </div>
+        </div>
+        <div class="row q-pa-sm justify-between">
+          <div class="q-mt-sm">
+            <div>Date</div>
+            <div class="text-bold text-h6">23 Mar 2024</div>
+          </div>
+          <div class="q-mt-sm">
+            <div class="text-right">Time</div>
+            <div class="text-bold text-h6">08:00 PM</div>
+          </div>
+        </div>
+        <div class="row q-pa-sm justify-between">
+          <div class="q-mt-sm">
+            <div>Section</div>
+            <div class="text-bold text-h6">A1</div>
+          </div>
+          <div class="q-mt-sm">
+            <div>Seat</div>
+            <div class="text-bold text-h6">175</div>
+          </div>
+        </div>
+      </div>
+      <hr class="dashed q-mx-lg q-mt-md" />
+      <q-card-actions class="q-pt-none" align="center">
+        <div class="text-center q-py-md">
+          <q-btn class="book-btn" rounded>
+            <div class="row text-white">
+              <div class="q-mt-xs text-bold">Save as Image</div>
+              <div class="q-ml-md">
+                <q-btn
+                  round
+                  icon="east"
+                  size="sm"
+                  text-black
+                  unelevated
+                  color="red-5"
+                  class="text-white"
+                />
+              </div>
+            </div>
+          </q-btn>
+        </div>
+      </q-card-actions>
+    </div>
     <QFooter class="footer" />
   </q-page>
 </template>

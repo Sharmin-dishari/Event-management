@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div class="row flex-center q-mt-lg">
+    <div class="row flex-center q-pt-lg">
       <q-avatar size="80px">
         <q-img src="/logo1.png" />
       </q-avatar>
@@ -8,11 +8,11 @@
     <div class="row flex-center text-h4">Mymuna Events</div>
     <div class="q-pa-md text-h6">Sign In</div>
     <q-form @submit="handleLogin">
-      <q-card-section>
+      <q-card-section class="q-py-none">
         <div>
           <q-input
             v-model="form.email"
-            class="itc-input required q-mb-md"
+            class="itc-input required q-mb-sm"
             stack-label
             outlined
             placeholder="Enter your email"
@@ -49,7 +49,7 @@
           </q-input>
         </div>
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="q-py-none">
         <div class="row justify-between">
           <div class="row">
             <q-toggle
@@ -65,8 +65,8 @@
       </q-card-section>
       <q-card-actions class="q-pt-none" align="center">
         <div class="text-center q-py-md">
-          <q-btn class="book-btn" rounded>
-            <div class="row text-white" type="submit">
+          <q-btn class="book-btn" rounded type="submit">
+            <div class="row text-white">
               <div class="q-mt-xs text-bold">Sign In</div>
               <div class="q-ml-md">
                 <q-btn
@@ -85,7 +85,7 @@
       </q-card-actions>
     </q-form>
     <div class="bg-color">
-      <q-card-section class="q-mx-lg">
+      <q-card-section class="q-mx-lg q-py-none">
         <div class="text-center q-mb-lg">OR</div>
         <div class="q-pa-none">
           <q-btn

@@ -1,16 +1,24 @@
 <template>
   <div
     class="foot-btn row flex-center justify-around"
-    :style="$q.dark.isActive ? 'background: #1d2531' : 'background: white'"
+    :class="$q.dark.isActive ? 'bg-dark' : 'bg-grey-2'"
   >
     <ToggoleBtn />
-    <div class="mid-btn row flex-center">
+    <div
+      class="mid-btn row flex-center"
+      :style="
+        $q.dark.isActive
+          ? 'background: #96969640'
+          : 'background: rgb(228, 226, 226);'
+      "
+    >
       <q-btn
         round
         unelevated
         dense
         icon="search"
-        class="bg-white text-black q-ml-sm"
+        :style="$q.dark.isActive ? 'background: #1d2531' : 'background: white'"
+        class="q-ml-sm"
         size="18px"
       />
       <q-btn
@@ -18,17 +26,35 @@
         unelevated
         dense
         icon="event"
-        class="bg-white text-black q-mx-md"
+        :style="$q.dark.isActive ? 'background: #1d2531' : 'background: white'"
+        class="q-mx-md"
         size="18px"
       />
-      <q-btn round unelevated dense class="q-mr-sm">
-        <q-avatar size="42px">
-          <img src="/play.png" />
-        </q-avatar>
-      </q-btn>
+      <q-btn
+        round
+        class="q-mr-sm"
+        unelevated
+        dense
+        icon="location_on"
+        :style="$q.dark.isActive ? 'background: #1d2531' : 'background: white'"
+        size="18px"
+      />
     </div>
-    <div class="person-icon row flex-center">
-      <q-icon name="perm_identity" size="30px" class="text-black" />
+    <div
+      class="person-icon row flex-center"
+      :style="
+        $q.dark.isActive
+          ? 'background: #96969640'
+          : 'background: rgb(228, 226, 226)'
+      "
+    >
+      <q-avatar class="q-pa-none q-ma-none">
+        <q-icon
+          name="perm_identity"
+          size="30px"
+          :class="$q.dark.isActive ? 'text-white' : 'text-black'"
+        />
+      </q-avatar>
     </div>
   </div>
 </template>
@@ -44,7 +70,6 @@ import ToggoleBtn from "./ToggoleBtn.vue";
   opacity: 0px;
 }
 .mid-btn {
-  background: rgb(228, 226, 226);
   border-radius: 90px;
   height: 54px;
 }
@@ -52,7 +77,7 @@ import ToggoleBtn from "./ToggoleBtn.vue";
   width: 54px;
   height: 54px;
   border-radius: 90px;
-  opacity: 0px;
-  background: rgb(228, 226, 226);
+  /* opacity: 0px; */
+  /* background: rgb(228, 226, 226); */
 }
 </style>

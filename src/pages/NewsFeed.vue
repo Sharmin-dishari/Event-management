@@ -29,7 +29,7 @@
         <div>
           <span><q-btn label="4" outline size="8px" round /></span>
           <span class="q-ml-sm">14 Feb, 2024</span>
-          <span><q-btn icon="more_horiz" /></span>
+          <span><q-btn flat round icon="more_horiz" /></span>
         </div>
       </div>
       <div class="q-mt-md">
@@ -61,19 +61,20 @@
           />
         </q-carousel>
       </div>
-      <div class="row justify-between">
+      <div class="row justify-between q-mt-sm">
         <div class="row">
-          <q-btn round icon="favorite_border" />
-          <q-btn round icon="maps_ugc" style="rotate: 270deg" />
+          <q-btn round icon="favorite_border" flat />
+          <q-btn round icon="maps_ugc" class="rotate-270" flat />
           <q-btn
             icon="send"
             round
+            flat
             @click="$router.push({ name: 'news-details' })"
-            style="rotate: 320deg"
+            class="rotate-320"
           />
         </div>
         <div class="q-mt-sm">
-          <q-btn icon="bookmark" />
+          <q-btn icon="bookmark" round flat />
         </div>
       </div>
       <div class="row q-pa-sm">
@@ -101,4 +102,12 @@ onMounted(() => {
 const slide = ref(1);
 </script>
 
-<style></style>
+<style>
+.rotate-270 {
+  transform: rotate(270deg);
+}
+
+.rotate-320 {
+  transform: rotate(320deg);
+}
+</style>

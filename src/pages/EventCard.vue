@@ -62,14 +62,14 @@
                 </div>
               </div>
             </div>
-            <q-item class="q-pa-none q-mt-md row justify-between">
-              <q-item-section>
+            <q-item class="q-pa-none row justify-between">
+              <q-item-section class="q-mt-sm">
                 <div class="title-font">Nasscom Techonol...</div>
                 <div style="font-size: 9px">
                   Manchester, UK - Etihad Stadium
                 </div>
               </q-item-section>
-              <q-item-section class="q-mr-sm" side>
+              <q-item-section class="q-mr-sm q-mt-md" side>
                 <div class="title-font">$125</div>
                 <div style="font-size: 9px">1/person</div>
               </q-item-section>
@@ -195,7 +195,7 @@ const users = ref([
 }
 .bottom-right {
   position: absolute;
-  bottom: -8px;
+  bottom: -10px;
   right: 10px;
 }
 .bottom-left {
@@ -207,9 +207,9 @@ const users = ref([
   border: 1px solid #ddd; /* Add a 1px solid border in light gray */
   position: relative; /* This allows us to position the button relatively inside the container */
   border-radius: 25px;
-  width: 260px;
-  height: 319px;
-  padding: 10px;
+  width: 300px;
+  height: 329px;
+  padding: 15px;
   opacity: 0px;
 }
 .dark-card {

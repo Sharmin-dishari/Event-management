@@ -6,7 +6,7 @@
       :class="!$q.dark.isActive ? 'bg-white text-black' : 'bg-dark text-white'"
     >
       <q-toolbar v-if="!$route.meta.isBack">
-        <q-avatar size="42px">
+        <q-avatar size="44px">
           <img src="/boy.png" />
         </q-avatar>
         <q-toolbar-title>
@@ -30,10 +30,10 @@
           @click="toggleLeftDrawer"
           unelevated
           dense
-          class="bg-grey-5"
+          :class="$q.dark.isActive ? 'bg-secondary' : 'bg-grey-2'"
         >
-          <q-avatar>
-            <img src="/menu.png" />
+          <q-avatar class="q-ma-xs">
+            <q-icon name="menu" />
           </q-avatar>
         </q-btn>
       </q-toolbar>
@@ -44,7 +44,7 @@
           round
           unelevated
           :class="!$q.dark.isActive ? 'bg-grey-3 text-black' : 'bg-grey-10'"
-          @click="$router.back()"
+          @click="handleBackRoute"
         />
         <q-toolbar-title
           :class="!$q.dark.isActive ? 'text-black' : 'text-grey-3'"
@@ -75,13 +75,22 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import { useCounterStore } from "../stores/example-store";
 import EssentialLink from "components/EssentialLink.vue";
 const commonStore = useCounterStore();
 defineOptions({
   name: "MainLayout",
 });
-
+const route = useRoute();
+const router = useRouter();
+const handleBackRoute = () => {
+  if (route.name === "my-ticket") {
+    router.push({ name: "event-details" });
+  } else {
+    router.back();
+  }
+};
 const linksList = [
   {
     title: "Events",
