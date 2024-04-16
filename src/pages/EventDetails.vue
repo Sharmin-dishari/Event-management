@@ -1,7 +1,10 @@
 <template>
   <q-page padding>
     <div>
-      <div class="container q-mt-md q-mx-sm">
+      <div
+        class="container q-mt-md q-mx-sm"
+        :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
+      >
         <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
         <div class="top-right">
           <q-btn icon="bookmark" unelevated dense class="button-bg" />
@@ -62,7 +65,10 @@
       </div>
       <div class="divider div-transparent q-mt-lg"></div>
       <div class="text-center q-py-md text-h6 text-bold">Event Sponsors</div>
-      <div class="row justify-between flex-center q-px-sm">
+      <div
+        class="row justify-between flex-center q-px-sm"
+        :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
+      >
         <img src="/Indonesia.png" class="image-brand" />
         <img src="/Indonesia (1).png" class="image-brand2 q-mt-sm" />
         <img

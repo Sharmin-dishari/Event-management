@@ -1,10 +1,16 @@
 <template>
   <q-page>
-    <div class="q-pa-md cursor-pointer" @click="$router.back()">
-      <q-icon name="arrow_back" size="md" />
+    <div class="q-pa-md">
+      <div
+        class="cursor-pointer"
+        @click="$router.back()"
+        v-if="$q.screen.lt.sm"
+      >
+        <q-icon name="arrow_back" size="md" />
+      </div>
+      <div class="q-px-md row flex-center text-h6">Sign up</div>
     </div>
-    <div class="q-px-md text-h6">Sign up</div>
-    <q-form @submit="handleLogin">
+    <q-form @submit="handleLogin" style="max-width: 450px; margin: 0 auto">
       <q-card-section>
         <div>
           <q-input
@@ -101,7 +107,7 @@
         </div>
       </q-card-actions>
     </q-form>
-    <q-card-section class="q-mx-lg">
+    <q-card-section class="q-mx-lg" style="max-width: 450px; margin: 0 auto">
       <div class="text-center q-mb-lg">OR</div>
       <div class="q-pa-none">
         <q-btn

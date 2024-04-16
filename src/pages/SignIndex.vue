@@ -6,8 +6,13 @@
       </q-avatar>
     </div>
     <div class="row flex-center text-h4">Mymuna Events</div>
-    <div class="q-pa-md text-h6">Sign In</div>
-    <q-form @submit="handleLogin">
+    <div
+      class="q-pa-md text-h6"
+      :class="$q.screen.gt.sm ? 'row flex-center' : ''"
+    >
+      Sign In
+    </div>
+    <q-form @submit="handleLogin" style="max-width: 450px; margin: 0 auto">
       <q-card-section class="q-py-none">
         <div>
           <q-input
@@ -84,7 +89,7 @@
         </div>
       </q-card-actions>
     </q-form>
-    <div class="bg-color">
+    <div class="bg-color" style="max-width: 450px; margin: 0 auto">
       <q-card-section class="q-mx-lg q-py-none">
         <div class="text-center q-mb-lg">OR</div>
         <div class="q-pa-none">

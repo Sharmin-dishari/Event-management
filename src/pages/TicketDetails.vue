@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    <div style="margin-bottom: 60px">
+    <div
+      style="margin-bottom: 60px"
+      :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
+    >
       <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
         <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
         <div class="content">
@@ -40,7 +43,7 @@
             <div class="text-bold text-h6">Madhu Mia</div>
           </div>
           <div class="q-mt-sm">
-            <qrcode-vue value="event-details/id" :size="80" level="H" />
+            <qrcode-vue value="event-details/id" :size="100" level="H" />
           </div>
         </div>
         <div class="row q-pa-sm justify-between">
@@ -86,7 +89,7 @@
         </div>
       </q-card-actions>
     </div>
-    <QFooter class="footer" />
+    <QFooter class="footer" v-if="$q.screen.lt.md" />
   </q-page>
 </template>
 

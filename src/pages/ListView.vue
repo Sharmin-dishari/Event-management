@@ -37,7 +37,7 @@
       </div>
     </div>
     <EventCard style="margin-bottom: 80px" />
-    <QFooter class="footer" />
+    <QFooter class="footer" v-if="$q.screen.lt.md" />
   </q-page>
 </template>
 

@@ -48,10 +48,20 @@
         />
         <q-toolbar-title
           :class="!$q.dark.isActive ? 'text-black' : 'text-grey-3'"
-          style="margin-left: -35px"
           class="text-center"
           >{{ commonStore.pageTitle }}</q-toolbar-title
         >
+        <q-btn
+          round
+          @click="toggleLeftDrawer"
+          unelevated
+          dense
+          :class="$q.dark.isActive ? 'bg-secondary' : 'bg-grey-2'"
+        >
+          <q-avatar class="q-ma-xs">
+            <q-icon name="menu" />
+          </q-avatar>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
