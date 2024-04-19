@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "987156750321",
+    "project_id": "auth-65b6e",
+    "storage_bucket": "auth-65b6e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987156750321:android:1bcb191ac2c876ec066e50",
+        "android_client_info": {
+          "package_name": "org.capacitor.quasar.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBX27LMo0wq00J9ejrARG_s0S56wYPQChw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -74,6 +74,8 @@
     >
       <q-list>
         <EssentialLink />
+        <q-btn @click="signInWithGoogle">Sign in google</q-btn>
+        {{ myinfo }}
       </q-list>
     </q-drawer>
 
@@ -88,6 +90,7 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCounterStore } from "../stores/example-store";
 import EssentialLink from "components/EssentialLink.vue";
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
 const commonStore = useCounterStore();
 defineOptions({
   name: "MainLayout",
@@ -100,6 +103,13 @@ const handleBackRoute = () => {
   } else {
     router.back();
   }
+};
+const myinfo = ref(null);
+const signInWithGoogle = async () => {
+  const result = await FirebaseAuthentication.signInWithGoogle();
+  console.log(result.user, "sign in");
+  myinfo.value = result.user;
+  return result.user;
 };
 const linksList = [
   {

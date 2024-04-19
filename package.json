@@ -13,7 +13,11 @@
     "build": "quasar build"
   },
   "dependencies": {
+    "@capacitor-firebase/authentication": "^6.0.0",
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
     "@quasar/extras": "^1.16.4",
+    "firebase": "^10.11.0",
     "pinia": "^2.0.11",
     "qrcode.vue": "^3.4.1",
     "quasar": "^2.8.0",
