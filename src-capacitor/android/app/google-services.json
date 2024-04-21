@@ -12,7 +12,20 @@
           "package_name": "org.capacitor.quasar.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "987156750321-9g5viniq0mqgglhjcarojv0te6ug4j1b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.capacitor.quasar.app",
+            "certificate_hash": "665225e8748bfff1071a16f60166f36d2b06f8eb"
+          }
+        },
+        {
+          "client_id": "987156750321-o1ajdltt2a79l10f7q60vsn3siq4i4hu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBX27LMo0wq00J9ejrARG_s0S56wYPQChw"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987156750321-o1ajdltt2a79l10f7q60vsn3siq4i4hu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
