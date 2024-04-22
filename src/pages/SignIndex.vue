@@ -97,7 +97,7 @@
             unelevated
             no-caps
             outline
-            @click="handleSocialLogin('google')"
+            @click="signInWithGoogle"
             class="full-width q-py-md"
           >
             <q-icon left size="2em" name="img:/google.png" />
@@ -109,7 +109,7 @@
             unelevated
             no-caps
             outline
-            @click="handleSocialLogin('google')"
+            @click="signInWithFacebook"
             class="full-width q-py-md"
           >
             <q-icon left size="2em" name="img:/facebook.png" />
@@ -125,12 +125,25 @@
         <span class="text-primary q-ml-sm">Sign up</span>
       </div>
     </div>
+    <div class="text-center text-bold">Logged in as {{ myinfo }}</div>
   </q-page>
 </template>
 
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
+import {
+  getAuth,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  TwitterAuthProvider,
+  OAuthProvider,
+  PhoneAuthProvider,
+  signInWithCredential,
+  EmailAuthProvider,
+  signOut,
+} from "firebase/auth";
 const darkMode = ref(false);
 const isPwd = ref(true);
 const rememberPass = ref(false);
@@ -138,6 +151,22 @@ const form = ref({
   email: null,
   password: null,
 });
+const myinfo = ref(null);
+const signInWithFacebook = async () => {
+  const result = await FirebaseAuthentication.signInWithFacebook();
+  myinfo.value = result;
+  return result.user;
+};
+const signInWithGoogle = async () => {
+  // 1. Create credentials on the native layer
+  const result = await FirebaseAuthentication.signInWithGoogle();
+  // 2. Sign in on the web layer using the id token
+  console.log(result, "result");
+
+  const credential = GoogleAuthProvider.credential(result.credential?.idToken);
+  const auth = getAuth();
+  await signInWithCredential(auth, credential);
+};
 const router = useRouter();
 const handleLogin = () => {
   router.push({ name: "on-board" });

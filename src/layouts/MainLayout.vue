@@ -74,8 +74,6 @@
     >
       <q-list>
         <EssentialLink />
-        <q-btn @click="signInWithGoogle">Sign in google</q-btn>
-        {{ myinfo }}dddd
       </q-list>
     </q-drawer>
 
@@ -90,18 +88,7 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCounterStore } from "../stores/example-store";
 import EssentialLink from "components/EssentialLink.vue";
-import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
-import {
-  getAuth,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  TwitterAuthProvider,
-  OAuthProvider,
-  PhoneAuthProvider,
-  signInWithCredential,
-  EmailAuthProvider,
-  signOut,
-} from "firebase/auth";
+
 const commonStore = useCounterStore();
 defineOptions({
   name: "MainLayout",
@@ -114,18 +101,6 @@ const handleBackRoute = () => {
   } else {
     router.back();
   }
-};
-const myinfo = ref(null);
-
-const signInWithGoogle = async () => {
-  // 1. Create credentials on the native layer
-  const result = await FirebaseAuthentication.signInWithGoogle();
-  // 2. Sign in on the web layer using the id token
-  console.log(result, "result");
-  myinfo.value = result;
-  const credential = GoogleAuthProvider.credential(result.credential?.idToken);
-  const auth = getAuth();
-  await signInWithCredential(auth, credential);
 };
 
 const linksList = [

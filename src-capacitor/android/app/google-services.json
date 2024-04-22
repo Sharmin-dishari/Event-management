@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "987156750321-9g5viniq0mqgglhjcarojv0te6ug4j1b.apps.googleusercontent.com",
+          "client_id": "987156750321-l2h8j0ni0l7egbm8kgjpg3u4vuk6777f.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "org.capacitor.quasar.app",
-            "certificate_hash": "665225e8748bfff1071a16f60166f36d2b06f8eb"
+            "certificate_hash": "29bd805b4c0cb2ac5186ea5e5ba2945636e04473"
           }
         },
         {
