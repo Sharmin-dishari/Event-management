@@ -5,7 +5,12 @@
         class="container q-mt-md q-mx-sm"
         :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
       >
-        <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
+        <q-img
+          s
+          :src="commonStore.eventDetails.eventImg"
+          alt="Snow"
+          style="border-radius: 20px; height: 300px"
+        />
         <div class="top-right">
           <q-btn icon="bookmark" unelevated dense class="button-bg" />
         </div>
@@ -20,8 +25,8 @@
         </div>
         <div class="content">
           <div class="bottom-left">
-            <div class="text-bold text-h6" style="margin-left: -40px">
-              Nascom Tech
+            <!-- <div class="text-bold text-h6" style="margin-left: -40px">
+              {{ commonStore.eventDetails.eventTitle }}
             </div>
             <div class="avatar-group">
               <div
@@ -32,35 +37,48 @@
                 <img :src="user.avatar" />
               </div>
               <div class="q-mt-sm q-pl-sm">10+ interested</div>
-            </div>
+            </div> -->
           </div>
           <div class="bottom-right">
             <div no-caps class="date-mark">
               <div>
-                <div class="text-bold text-h6">23<sup>th</sup></div>
-                <div style="font-size: 11px" class="q-mt-xs">Feb</div>
+                <div class="text-bold text-h6">
+                  {{ commonStore.eventDetails?.eventDate?.split("/")[0]
+                  }}<sup>th</sup>
+                </div>
+                <div style="font-size: 11px" class="q-mt-xs">
+                  {{
+                    monthName(
+                      commonStore.eventDetails?.eventDate?.split("/")[1]
+                    )
+                  }}
+                </div>
               </div>
             </div>
-            <div class="text-bold text-h6">$125</div>
+            <!-- <div class="text-bold text-h6">$125</div> -->
             <div style="font-size: 9px">1/person</div>
           </div>
         </div>
       </div>
       <div class="title-font q-my-md q-px-sm">
-        Nasscom Technology & Leadership
+        {{ commonStore.eventDetails.eventTitle }}
       </div>
       <div class="q-ma-sm row q-py-md">
         <q-btn icon="calendar_month" unelevated dense class="button-border" />
         <div class="q-ml-md">
-          <div>14 December, 2021</div>
-          <div class="text-caption">Tuesday, 4:00PM - 9:00PM</div>
+          <div>{{ changeDateFormat(commonStore.eventDetails.eventDate) }}</div>
+          <div class="text-caption">
+            {{ commonStore.eventDetails.eventTime }}
+          </div>
         </div>
       </div>
       <div class="q-ma-sm row">
         <q-btn icon="pin_drop" unelevated dense class="button-border" />
         <div class="q-ml-md">
-          <div>Gala Convention Center</div>
-          <div class="text-caption">Manchester, UK - Etihad Stadium</div>
+          <!-- <div>Gala Convention Center</div> -->
+          <div class="text-caption q-mt-sm">
+            {{ commonStore.eventDetails.eventLocation }}
+          </div>
         </div>
       </div>
       <div class="divider div-transparent q-mt-lg"></div>
@@ -84,7 +102,7 @@
           </q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label class="header-title">Alex Madhu</q-item-label>
+          <q-item-label class="header-title">Mymuna</q-item-label>
           <q-item-label class="text-caption">Organizer</q-item-label>
         </q-item-section>
         <q-item-section top>
@@ -100,9 +118,29 @@
               size="sm"
               color="grey-3"
               unelevated
-              class="q-mr-sm text-black"
+              class="text-black"
             />
+
             <q-btn
+              clickable
+              round
+              size="sm"
+              unelevated
+              color="grey-3"
+              class="text-black q-ml-sm"
+            >
+              <a
+                clickable
+                :href="`tel:+88${commonStore.eventDetails.contactPhone}`"
+                style="color: black; text-decoration: none"
+              >
+                <q-icon size="22px" name="phone" />
+              </a>
+              <q-tooltip content-class="bg-primary" :offset="[10, 10]">
+                {{ commonStore.eventDetails.contactPhone }}
+              </q-tooltip>
+            </q-btn>
+            <!-- <q-btn
               round
               icon="phone_forwarded"
               size="sm"
@@ -110,16 +148,15 @@
               unelevated
               color="grey-3"
               class="text-black"
-            />
+            /> -->
           </q-item-label>
         </q-item-section>
       </q-item>
       <div class="q-pa-sm">
         <div>About Event</div>
         <div class="text-caption">
-          Enjoy your favorite dishe and a lovely your friends and family and
-          have a great time. Food from local food trucks will be available for
-          purchase. <span class="text-blue-4">Read More...</span>
+          {{ commonStore.eventDetails.eventSummary }}
+          <!-- <span class="text-blue-4">Read More...</span> -->
         </div>
       </div>
       <div class="text-center q-py-md">
@@ -129,7 +166,7 @@
           @click="$router.push({ name: 'book-ticket' })"
         >
           <div class="row text-white">
-            <div class="q-mt-xs text-bold">Book ticket- $125</div>
+            <div class="q-mt-xs text-bold">Book ticket</div>
             <div class="q-ml-md">
               <q-btn
                 round
@@ -152,6 +189,7 @@
 </template>
 
 <script setup>
+import { date as qdate } from "quasar";
 import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
 import InviteFriends from "../components/InviteFriends.vue";
@@ -159,6 +197,11 @@ const commonStore = useCounterStore();
 onMounted(() => {
   commonStore.pageTitle = "Event Details";
 });
+const monthName = (monthNumber) => {
+  return new Date(2000, monthNumber - 1, 1).toLocaleString("en-US", {
+    month: "long",
+  });
+};
 const inviteFrnds = ref(false);
 const users = ref([
   {
@@ -178,6 +221,12 @@ const users = ref([
     avatar: "boy.png",
   },
 ]);
+const changeDateFormat = (date, format = "DD MMM , YYYY") => {
+  return qdate.formatDate(date, format);
+};
+const changeTimeFormat = (date, format = "HH:mm a") => {
+  return qdate.formatDate(date, format);
+};
 </script>
 
 <style scoped>
@@ -286,7 +335,7 @@ const users = ref([
 }
 .bottom-right {
   position: absolute;
-  bottom: 8px;
+  bottom: 28px;
   right: 10px;
 }
 .bookmark-button {

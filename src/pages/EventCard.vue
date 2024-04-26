@@ -2,7 +2,7 @@
   <div class="q-mt-md">
     <div class="row justify-between">
       <div class="q-mb-md q-mt-sm">Upcoming Events</div>
-      <div class="row">
+      <!-- <div class="row">
         <span class="q-mt-sm">Sort by</span>
         <q-select
           v-model="model"
@@ -13,11 +13,11 @@
           label-color="black"
           stack-label="Standard"
         />
-      </div>
+      </div> -->
     </div>
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container">
-        <div v-for="item in 4" :key="item.id" class="option">
+        <div v-for="item in eventList" :key="item.id" class="option">
           <section
             class="art-event-gallery"
             :class="
@@ -25,23 +25,30 @@
             "
           >
             <div class="row justify-between q-mt-sm">
-              <div class="text-h6">Nasscom Tech</div>
+              <div class="text-h6">{{ item.eventTitle }}</div>
               <q-btn
                 round
                 unelevated
                 dense
                 icon="north_east"
-                to="/event-details"
+                @click="
+                  $router.push({ name: 'event-details', query: item.id });
+                  commonStore.eventDetails = item;
+                "
                 class="text-black"
                 color="grey-3"
               />
             </div>
             <div class="container q-mt-md">
-              <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
+              <q-img
+                :src="item.eventImg"
+                alt="Snow"
+                style="border-radius: 20px; max-width: 270px; height: 185px"
+              />
               <div class="top-right">
                 <q-btn icon="bookmark" unelevated dense class="button-border" />
               </div>
-              <div class="bottom-left">
+              <!-- <div class="bottom-left">
                 <div class="avatar-group">
                   <div
                     class="avatar"
@@ -52,25 +59,29 @@
                   </div>
                   <div class="hidden-avatars">+10</div>
                 </div>
-              </div>
+              </div> -->
               <div class="bottom-right">
                 <div no-caps class="date-mark">
                   <div>
-                    <div>23</div>
-                    <div style="font-size: 9px">Feb</div>
+                    <div>{{ item.eventDate.split("/")[0] }}</div>
+                    <div style="font-size: 9px">
+                      {{ monthName(item.eventDate.split("/")[1]) }}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <q-item class="q-pa-none row justify-between">
               <q-item-section class="q-mt-sm">
-                <div class="title-font">Nasscom Techonol...</div>
+                <div class="title-font ellipsis">
+                  {{ item.eventSummary.substring(0, 20) }}...
+                </div>
                 <div style="font-size: 9px">
-                  Manchester, UK - Etihad Stadium
+                  {{ item.eventLocation }}
                 </div>
               </q-item-section>
               <q-item-section class="q-mr-sm q-mt-md" side>
-                <div class="title-font">$125</div>
+                <!-- <div class="title-font">$125</div> -->
                 <div style="font-size: 9px">1/person</div>
               </q-item-section>
             </q-item>
@@ -85,7 +96,7 @@
       >
         News & Feed
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <span class="q-mt-sm">Sort all</span>
         <q-select
           v-model="model"
@@ -96,7 +107,7 @@
           label-color="black"
           stack-label="Standard"
         />
-      </div>
+      </div> -->
     </div>
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container">
@@ -135,9 +146,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import { db, collection } from "src/stores/firebase.js";
+import { onSnapshot } from "firebase/firestore";
+import { useCounterStore } from "../stores/example-store";
+const commonStore = useCounterStore();
 const options = ref(["1", "2"]);
 const model = ref(null);
+const monthName = (monthNumber) => {
+  return new Date(2000, monthNumber - 1, 1).toLocaleString("en-US", {
+    month: "long",
+  });
+};
 const list = ref([
   {
     id: 1,
@@ -162,6 +182,17 @@ const users = ref([
     avatar: "boy.png",
   },
 ]);
+const eventList = ref([]);
+onMounted(() => {
+  const catsRef = collection(db, "RSVPEvents");
+  const appliedbookings = collection(db, "booking");
+  onSnapshot(catsRef, (snapshot) => {
+    eventList.value = [];
+    snapshot.docs.forEach((doc) => {
+      eventList.value.push({ ...doc.data(), id: doc.id });
+    });
+  });
+});
 </script>
 
 <style scoped>

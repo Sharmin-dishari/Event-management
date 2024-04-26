@@ -132,19 +132,23 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useCounterStore } from "../stores/example-store";
 import { FirebaseAuthentication } from "@capacitor-firebase/authentication";
+import { auth } from "src/stores/firebase.js";
 import {
-  getAuth,
-  GoogleAuthProvider,
-  FacebookAuthProvider,
-  TwitterAuthProvider,
-  OAuthProvider,
-  PhoneAuthProvider,
-  signInWithCredential,
-  EmailAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
   signOut,
+  getAuth,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  FacebookAuthProvider,
+  signInWithRedirect,
+  signInWithCredential,
 } from "firebase/auth";
 const darkMode = ref(false);
+const commonStore = useCounterStore();
 const isPwd = ref(true);
 const rememberPass = ref(false);
 const form = ref({
@@ -157,20 +161,40 @@ const signInWithFacebook = async () => {
   myinfo.value = result;
   return result.user;
 };
+const handleLogin = () => {
+  let email = form.value.email;
+  let password = form.value.password;
+  signInWithEmailAndPassword(auth, email, password)
+    .then((res) => {
+      if (
+        res != null &&
+        res != undefined &&
+        res.user.uid != null &&
+        res.user.uid != undefined
+      )
+        alert("Login successful");
+      commonStore.userAuthInfo = {
+        accessToken: auth.currentUser.accessToken,
+      };
+      commonStore.handleUserAuthInfo(auth.currentUser.accessToken);
+      router.push({ name: "dashboard" });
+    })
+    .catch((err) => {
+      alert(err.message);
+    });
+  onAuthStateChanged(auth, (currentUser) => {
+    let user = currentUser.email;
+    console.log(user, "user saved");
+  });
+};
 const signInWithGoogle = async () => {
-  // 1. Create credentials on the native layer
   const result = await FirebaseAuthentication.signInWithGoogle();
-  // 2. Sign in on the web layer using the id token
-  console.log(result, "result");
-
   const credential = GoogleAuthProvider.credential(result.credential?.idToken);
   const auth = getAuth();
   await signInWithCredential(auth, credential);
 };
 const router = useRouter();
-const handleLogin = () => {
-  router.push({ name: "on-board" });
-};
+
 const emailValidationRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const validateEmail = (val) => {
@@ -185,3 +209,4 @@ const validateEmail = (val) => {
   background: rgb(211, 15, 15);
 }
 </style>
+src/stores/firebase.js

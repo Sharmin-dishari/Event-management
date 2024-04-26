@@ -10,19 +10,11 @@
           <img src="/boy.png" />
         </q-avatar>
         <q-toolbar-title>
-          <div class="text-caption">Location</div>
-          <div
-            class="text-h6 text-bold"
-            style="
-              font-family: Clash Display;
-              font-size: 19.31px;
-              font-weight: 500;
-              line-height: 22.99px;
-              text-align: left;
-            "
-          >
-            Paris, FR
+          <div class="text-caption text-bold">
+            {{ auth.currentUser.displayName }}
           </div>
+          <div class="text-caption">{{ auth.currentUser.email }}</div>
+          <!-- <div class="text-caption">Paris, FR</div> -->
         </q-toolbar-title>
 
         <q-btn
@@ -88,6 +80,7 @@ import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCounterStore } from "../stores/example-store";
 import EssentialLink from "components/EssentialLink.vue";
+import { auth } from "src/stores/firebase.js";
 
 const commonStore = useCounterStore();
 defineOptions({

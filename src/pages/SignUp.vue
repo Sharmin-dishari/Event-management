@@ -10,11 +10,11 @@
       </div>
       <div class="q-px-md row flex-center text-h6">Sign up</div>
     </div>
-    <q-form @submit="handleLogin" style="max-width: 450px; margin: 0 auto">
+    <q-form @submit="signUp" style="max-width: 450px; margin: 0 auto">
       <q-card-section>
         <div>
           <q-input
-            v-model="form.name"
+            v-model="form.displayName"
             class="itc-input required"
             stack-label
             outlined
@@ -107,33 +107,6 @@
         </div>
       </q-card-actions>
     </q-form>
-    <q-card-section class="q-mx-lg" style="max-width: 450px; margin: 0 auto">
-      <div class="text-center q-mb-lg">OR</div>
-      <div class="q-pa-none">
-        <q-btn
-          unelevated
-          no-caps
-          outline
-          @click="handleSocialLogin('google')"
-          class="full-width q-py-md"
-        >
-          <q-icon left size="2em" name="img:/google.png" />
-          <div class="placeholder">Sign in with Google</div>
-        </q-btn>
-      </div>
-      <div class="q-pa-none q-mt-md">
-        <q-btn
-          unelevated
-          no-caps
-          outline
-          @click="handleSocialLogin('google')"
-          class="full-width q-py-md"
-        >
-          <q-icon left size="2em" name="img:/facebook.png" />
-          <div class="placeholder">Sign in with Facebook</div>
-        </q-btn>
-      </div>
-    </q-card-section>
     <div
       class="text-caption text-center q-py-md cursor-pointer"
       @click="$router.push({ name: 'sign-index' })"
@@ -147,22 +120,37 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from "src/stores/firebase.js";
+import "firebase/auth";
 const confirm_password = ref(true);
 const isPwd = ref(true);
 const form = ref({
   email: "",
-  name: "",
+  displayName: "",
   password: "",
   confirm_password: "",
 });
 const router = useRouter();
-const handleLogin = () => {
-  router.push({ name: "dashboard" });
-};
 const emailValidationRegex =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const validateEmail = (val) => {
   return emailValidationRegex.test(val);
+};
+
+const signUp = () => {
+  let email = form.value.email;
+  let password = form.value.password;
+  let displayName = form.value.displayName;
+  createUserWithEmailAndPassword(auth, email, password).then(() => {
+    updateProfile(auth.currentUser, {
+      displayName: displayName,
+    })
+      .then(() => {
+        router.push({ name: "on-board" });
+      })
+      .catch((error) => {});
+  });
 };
 </script>
 

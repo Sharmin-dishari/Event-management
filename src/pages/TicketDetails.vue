@@ -5,13 +5,19 @@
       :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
     >
       <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
-        <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" />
+        <!-- <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" /> -->
+        <q-img
+          s
+          :src="commonStore.eventDetails.eventImg"
+          alt="Snow"
+          style="border-radius: 20px; height: 300px"
+        />
         <div class="content">
           <div class="bottom-left">
-            <div class="text-bold text-h6" style="margin-left: -40px">
-              Nascom Tech
+            <div class="text-bold text-h6">
+              {{ currentTicket?.EventTitle }}
             </div>
-            <div class="avatar-group">
+            <!-- <div class="avatar-group">
               <div
                 class="avatar"
                 v-for="(user, index) in users?.slice(0, 3)"
@@ -20,12 +26,12 @@
                 <img :src="user.avatar" />
               </div>
               <div class="q-mt-sm q-pl-sm">10+ interested</div>
-            </div>
+            </div> -->
           </div>
-          <div class="bottom-right">
+          <!-- <div class="bottom-right">
             <div class="text-bold text-h6">$125</div>
             <div style="font-size: 9px">1/person</div>
-          </div>
+          </div> -->
         </div>
       </div>
       <div
@@ -40,30 +46,41 @@
         <div class="row q-pa-sm q-pt-md justify-between">
           <div>
             <div class="q-mt-sm">Name</div>
-            <div class="text-bold text-h6">Madhu Mia</div>
+            <div class="text-bold text-h6">
+              {{ currentTicket?.AttendeeName }}
+            </div>
           </div>
           <div class="q-mt-sm">
-            <qrcode-vue value="event-details/id" :size="100" level="H" />
+            <qrcode-vue :value="commonStore.qrValue" :size="120" level="H" />
           </div>
         </div>
         <div class="row q-pa-sm justify-between">
           <div class="q-mt-sm">
             <div>Date</div>
-            <div class="text-bold text-h6">23 Mar 2024</div>
+            <div class="text-bold text-h6">
+              {{ changeDateFormat(commonStore.eventDetails.eventDate) }}
+            </div>
           </div>
-          <div class="q-mt-sm">
+          <div class="q-mt-sm" v-if="commonStore.eventDetails?.eventTime">
             <div class="text-right">Time</div>
-            <div class="text-bold text-h6">08:00 PM</div>
+            <div class="text-bold text-h6">
+              {{
+                changeTimeFormat(commonStore.eventDetails.eventTime) ||
+                "Event Time"
+              }}
+            </div>
           </div>
         </div>
         <div class="row q-pa-sm justify-between">
           <div class="q-mt-sm">
             <div>Section</div>
-            <div class="text-bold text-h6">A1</div>
+            <div class="text-bold text-h6">---</div>
           </div>
           <div class="q-mt-sm">
             <div>Seat</div>
-            <div class="text-bold text-h6">175</div>
+            <div class="text-bold text-h6">
+              {{ commonStore.eventDetails.totalseat }}
+            </div>
           </div>
         </div>
       </div>
@@ -89,19 +106,84 @@
         </div>
       </q-card-actions>
     </div>
+    <div class="q-ml-md text-h6">Previous Booked Ticket:</div>
+    <div
+      class="q-pa-md row items-start q-gutter-md"
+      v-for="(obj, index) in OtherBookedTicket"
+      :key="obj.id"
+    >
+      <q-card
+        @click="draftcanvasticket(index, obj)"
+        aria-label="please click to view QR tickets"
+        class="my-card"
+      >
+        <div class="row justify-center q-mt-sm">
+          <qrcode-vue
+            :value="getQrValue(obj.id, obj.AttendeeName)"
+            :size="200"
+            level="H"
+          />
+        </div>
+        <q-card-section>
+          <div class="text-subtitle2">
+            This a ticket for {{ obj.AttendeeName }} with email
+            {{ obj.Personemail }}
+          </div>
+          <div class="text-h6">Event: {{ obj.EventTitle }}</div>
+        </q-card-section>
+      </q-card>
+    </div>
     <QFooter class="footer" v-if="$q.screen.lt.md" />
   </q-page>
 </template>
 
 <script setup>
+import { date as qdate } from "quasar";
 import QFooter from "../pages/QFooter.vue";
 import QrcodeVue from "qrcode.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
+import { db, collection } from "src/stores/firebase.js";
+import { addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { useCounterStore } from "../stores/example-store";
+const bookedList = ref([]);
 const commonStore = useCounterStore();
 onMounted(() => {
   commonStore.pageTitle = "My Ticket";
+  const appliedbookings = collection(db, "booking");
+  onSnapshot(appliedbookings, (snapshot) => {
+    bookedList.value = [];
+    snapshot.docs.forEach((doc) => {
+      bookedList.value.push({ ...doc.data(), id: doc.id });
+    });
+  });
 });
+const currentTicket = computed(() =>
+  bookedList.value.find((item) => {
+    return item.id === commonStore.currentTicket;
+  })
+);
+const getQrValue = (id, AttendeeName) => {
+  return (
+    id +
+    "@" +
+    AttendeeName +
+    "@" +
+    commonStore.eventDetails.eventTitle +
+    "@" +
+    commonStore.eventDetails.id
+  );
+};
+const OtherBookedTicket = computed(() =>
+  bookedList.value.filter((item) => {
+    return item.id !== commonStore.currentTicket;
+  })
+);
+const changeDateFormat = (date, format = "DD MMM , YYYY") => {
+  return qdate.formatDate(date, format);
+};
+const changeTimeFormat = (date, format = "HH:mm a") => {
+  return qdate.formatDate(date, format);
+};
 const users = ref([
   {
     id: 1,
@@ -262,7 +344,10 @@ hr.dashed {
 }
 .bottom-left {
   position: absolute;
-  bottom: 8px;
+  bottom: 20px;
   left: 40px;
+}
+.my-card {
+  max-width: 450px;
 }
 </style>

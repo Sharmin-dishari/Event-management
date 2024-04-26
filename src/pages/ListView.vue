@@ -1,6 +1,7 @@
 <template>
   <q-page padding>
-    <div class="row q-gutter-x-sm q-px-sm">
+    <!-- future use -->
+    <!-- <div class="row q-gutter-x-sm q-px-sm">
       <div class="col-grow q-mt-sm" style="border-radius: 12px">
         <q-input
           dense
@@ -18,7 +19,7 @@
       <div class="q-mt-sm">
         <q-btn icon="calendar_month" unelevated dense class="button-border" />
       </div>
-    </div>
+    </div> 
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container q-mt-md">
         <div v-for="(item, index) in buttonList" :key="index" class="option">
@@ -35,7 +36,8 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
+    <!-- future use -->
     <EventCard style="margin-bottom: 80px" />
     <QFooter class="footer" v-if="$q.screen.lt.md" />
   </q-page>

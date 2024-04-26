@@ -1,10 +1,10 @@
 <template>
   <q-page>
-    <q-form @submit="handleLogin">
+    <q-form @submit="onSubmit">
       <q-card-section>
         <div>
           <q-input
-            v-model="form.name"
+            v-model="form.AttendeeName"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -13,7 +13,7 @@
             <template #prepend> <q-icon name="lock" /></template>
           </q-input>
           <q-input
-            v-model="form.email"
+            v-model="form.Personemail"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -25,18 +25,18 @@
             <template #prepend> <q-icon name="email" /></template>
           </q-input>
           <q-select
-            v-model="form.gender"
+            v-model="form.Gender"
             class="itc-input required q-mb-md"
             stack-label
             outlined
             label="Gender"
-            :options="['Men', 'Women', 'Children']"
+            :options="['Male', 'Female', 'Other']"
             placeholder="Enter your password"
           >
             <template #prepend> <q-icon name="people" /></template>
           </q-select>
           <q-input
-            v-model="form.contact"
+            v-model="form.PhoneNumber"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -45,7 +45,7 @@
             <template #prepend> <q-icon name="call" /></template>
           </q-input>
           <q-input
-            v-model="form.diet"
+            v-model="form.Dietpreference"
             class="itc-input required q-mb-md"
             stack-label
             outlined
@@ -55,7 +55,7 @@
             <template #prepend><q-icon name="coffee" /></template>
           </q-input>
           <q-input
-            v-model="form.group"
+            v-model="form.AccompaniedBy"
             class="itc-input required"
             stack-label
             outlined
@@ -104,20 +104,67 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
+import { useQuasar } from "quasar";
 import { useCounterStore } from "../stores/example-store";
+import { db, collection } from "src/stores/firebase.js";
+import { addDoc } from "firebase/firestore";
 const commonStore = useCounterStore();
+const $q = useQuasar();
 import { useRouter } from "vue-router";
-const isAgree = ref(true);
+const isAgree = ref(false);
 const form = ref({
-  name: "",
-  email: "",
-  gender: "",
-  diet: "",
-  group: "",
+  AttendeeName: "",
+  Personemail: "",
+  Gender: "",
+  Dietpreference: "",
+  PhoneNumber: "",
+  AccompaniedBy: "",
+  EventId: "",
+  EventTitle: "",
 });
 onMounted(() => {
   commonStore.pageTitle = "Book Ticket";
+  form.value.EventId = commonStore.eventDetails.id;
+  form.value.EventTitle = commonStore.eventDetails.eventTitle;
 });
+const onSubmit = () => {
+  let AttendeeName = form.value.AttendeeName;
+  if (isAgree.value !== true) {
+    $q.notify({
+      color: "red-5",
+      textColor: "white",
+      icon: "warning",
+      message: "Please accept the terms first.",
+    });
+  } else {
+    const EventsDocRef = collection(db, "booking");
+    addDoc(EventsDocRef, form.value)
+      .then((result) => {
+        if (result._key.path != null && result._key.path != undefined) {
+          $q.notify({
+            color: "green-4",
+            textColor: "white",
+            icon: "cloud_done",
+            message: `Ticket booked successfully for event: ${commonStore.eventDetails.eventTitle}`,
+          });
+          router.push({ name: "my-ticket" });
+          isAgree.value = false;
+          commonStore.currentTicket = result?._key.path?.segments[1];
+          commonStore.qrValue =
+            result._key.path.segments[1] +
+            "@" +
+            AttendeeName +
+            "@" +
+            commonStore.eventDetails.eventTitle +
+            "@" +
+            commonStore.eventDetails.id;
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  }
+};
 const router = useRouter();
 const handleLogin = () => {
   router.push({ name: "my-ticket" });
