@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "987156750321",
-    "project_id": "auth-65b6e",
-    "storage_bucket": "auth-65b6e.appspot.com"
+    "project_number": "435741062632",
+    "project_id": "event-app-5d176",
+    "storage_bucket": "event-app-5d176.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:987156750321:android:1bcb191ac2c876ec066e50",
+        "mobilesdk_app_id": "1:435741062632:android:085c52de9f86542797a05d",
         "android_client_info": {
-          "package_name": "org.capacitor.quasar.app"
+          "package_name": "com.mymanu.event"
         }
       },
       "oauth_client": [
         {
-          "client_id": "987156750321-l2h8j0ni0l7egbm8kgjpg3u4vuk6777f.apps.googleusercontent.com",
+          "client_id": "435741062632-uolm25a0ssh4r77lqguichpcv3977m8o.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "org.capacitor.quasar.app",
+            "package_name": "com.mymanu.event",
             "certificate_hash": "29bd805b4c0cb2ac5186ea5e5ba2945636e04473"
           }
         },
         {
-          "client_id": "987156750321-o1ajdltt2a79l10f7q60vsn3siq4i4hu.apps.googleusercontent.com",
+          "client_id": "435741062632-jk35k5orf3m2b9nr1lkq36r97mfkcjfu.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBX27LMo0wq00J9ejrARG_s0S56wYPQChw"
+          "current_key": "AIzaSyCQzS3IemWmvFAQI_Qg3K1Z3sfIlVeUles"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "987156750321-o1ajdltt2a79l10f7q60vsn3siq4i4hu.apps.googleusercontent.com",
+              "client_id": "435741062632-jk35k5orf3m2b9nr1lkq36r97mfkcjfu.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

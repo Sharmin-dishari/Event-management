@@ -1,8 +1,8 @@
 {
-  "name": "nasscom_tech",
+  "name": "mymanu",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Nasscom Tech",
+  "description": "An Event app",
+  "productName": "Mymanu",
   "author": "Sharmin <“sharminakter1820@gmail.com”>",
   "private": true,
   "scripts": {

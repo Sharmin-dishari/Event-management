@@ -191,7 +191,9 @@ const signInWithGoogle = async () => {
   const result = await FirebaseAuthentication.signInWithGoogle();
   const credential = GoogleAuthProvider.credential(result.credential?.idToken);
   const auth = getAuth();
-  await signInWithCredential(auth, credential);
+  await signInWithCredential(auth, credential).then((res) => {
+    myinfo.value = result;
+  });
 };
 const router = useRouter();
 

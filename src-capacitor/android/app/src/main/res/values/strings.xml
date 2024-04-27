@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Nasscom Tech</string>
-    <string name="title_activity_main">Nasscom Tech</string>
-    <string name="package_name">org.capacitor.quasar.app</string>
-    <string name="custom_url_scheme">org.capacitor.quasar.app</string>
+    <string name="app_name">Mymanu</string>
+    <string name="title_activity_main">Mymanu</string>
+    <string name="package_name">com.mymanu.event</string>
+    <string name="custom_url_scheme">com.mymanu.event</string>
     <string name="facebook_app_id">809599494362920</string>
 <string name="fb_login_protocol_scheme">fb809599494362920</string>
 <string name="facebook_client_token">8b1cb50012f227a096fc3da0a693a136</string>

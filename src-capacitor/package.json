@@ -1,7 +1,7 @@
 {
-  "name": "nasscom_tech",
+  "name": "mymanu",
   "version": "0.0.1",
-  "description": "A Quasar Project",
+  "description": "An Event app",
   "author": "Sharmin <“sharminakter1820@gmail.com”>",
   "private": true,
   "dependencies": {
@@ -10,6 +10,6 @@
     "@capacitor/app": "^5.0.0",
     "@capacitor/cli": "^5.0.0",
     "@capacitor/core": "^5.0.0",
-    "firebase": "^10.11.0"
+    "firebase": "^10.11.1"
   }
 }

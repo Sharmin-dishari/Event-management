@@ -1,6 +1,6 @@
 {
-  "appId": "org.capacitor.quasar.app",
-  "appName": "Nasscom Tech",
+  "appId": "com.mymanu.event",
+  "appName": "Mymanu",
   "webDir": "www",
   "server": {
     "androidScheme": "https"

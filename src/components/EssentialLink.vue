@@ -17,6 +17,12 @@
           </div>
           <div class="q-ml-md" style="font-size: 16px">{{ item.name }}</div>
         </div>
+        <div class="row q-mt-lg q-pa-sm click-event" @click="handleSignOut">
+          <div>
+            <q-icon name="login" size="25px" />
+          </div>
+          <div class="q-ml-md" style="font-size: 16px">Sign Out</div>
+        </div>
         <div class="row q-mt-md q-ml-sm">
           <q-toggle
             size="md"
@@ -38,12 +44,28 @@
 <script setup>
 import { ref } from "vue";
 import { useQuasar, Dark } from "quasar";
+import { signOut } from "firebase/auth";
+import { auth } from "src/stores/firebase.js";
+import { useRouter } from "vue-router";
+
 defineOptions({
   name: "EssentialLink",
 });
+const router = useRouter();
 const darkMode = ref(false);
 const handleDarkMode = () => {
   Dark.toggle();
+};
+const handleSignOut = () => {
+  signOut(auth)
+    .then(() => {
+      alert("User Signed out");
+      router.push({ name: "sign-index" });
+    })
+    .catch((error) => {
+      // An error happened.
+      alert(error.message);
+    });
 };
 const navLinks = [
   {
@@ -75,11 +97,6 @@ const navLinks = [
     icon: "help_outline",
     name: "Helps & FAQs",
     hash: "settings",
-  },
-  {
-    icon: "login",
-    name: "Sign Out",
-    hash: "log-out",
   },
 ];
 </script>
