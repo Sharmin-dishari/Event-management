@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div :style="$q.screen.gt.sm ? 'margin: 0 auto' : 'row q-gutter-md'"></div>
-    <div style="padding-bottom: 60px">
+    <div style="padding-bottom: 60px" v-if="OtherBookedTicket.length">
       <div
         class="q-pb-md row items-start q-gutter-md"
         v-for="(obj, index) in OtherBookedTicket"
@@ -69,6 +69,9 @@
         </q-card>
       </div>
     </div>
+    <div v-else class="row flex-center q-mt-xl">
+      No ticket available for this user
+    </div>
     <QFooter class="footer" v-if="$q.screen.lt.md" />
   </q-page>
 </template>
@@ -106,7 +109,7 @@ const getQrValue = (id, AttendeeName) => {
   );
 };
 const OtherBookedTicket = computed(() =>
-  bookedList.value.filter((item) => {
+  bookedList.value?.filter((item) => {
     return item.Personemail === auth.currentUser.email;
   })
 );

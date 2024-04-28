@@ -111,7 +111,7 @@
         </div>
       </div>
     </div>
-    <div class="row justify-between click-event">
+    <div class="row justify-between">
       <div
         class="q-mb-sm q-mt-md cursor-pointer click-event"
         @click="$router.push({ name: 'news-feed' })"

@@ -83,6 +83,13 @@ import EssentialLink from "components/EssentialLink.vue";
 import { auth } from "src/stores/firebase.js";
 import { db, collection } from "src/stores/firebase.js";
 import { onSnapshot } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    router.push({ name: "sign-index" });
+  }
+});
 const commonStore = useCounterStore();
 defineOptions({
   name: "MainLayout",
@@ -127,10 +134,5 @@ const leftDrawerOpen = ref(false);
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
-watchEffect(() => {
-  if (!auth.currentUser || auth.currentUser === null) {
-    router.push({ name: "sign-index" });
-  }
-});
 </script>
 <style></style>

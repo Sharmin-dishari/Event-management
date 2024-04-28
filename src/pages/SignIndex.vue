@@ -106,7 +106,7 @@
             <div class="placeholder">Sign in with Google</div>
           </q-btn>
         </div>
-        <div class="q-pa-none q-mt-md">
+        <!-- <div class="q-pa-none q-mt-md">
           <q-btn
             unelevated
             no-caps
@@ -117,7 +117,7 @@
             <q-icon left size="2em" name="img:/facebook.png" />
             <div class="placeholder">Sign in with Facebook</div>
           </q-btn>
-        </div>
+        </div> -->
       </q-card-section>
       <div
         class="text-caption text-center q-py-md cursor-pointer"
