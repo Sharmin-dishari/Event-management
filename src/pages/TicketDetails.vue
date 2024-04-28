@@ -7,10 +7,9 @@
       <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
         <!-- <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" /> -->
         <q-img
-          s
           :src="commonStore.eventDetails.eventImg"
           alt="Snow"
-          style="border-radius: 20px; height: 300px"
+          style="border-radius: 20px"
         />
         <div class="content">
           <div class="bottom-left">
@@ -28,10 +27,12 @@
               <div class="q-mt-sm q-pl-sm">10+ interested</div>
             </div> -->
           </div>
-          <!-- <div class="bottom-right">
-            <div class="text-bold text-h6">$125</div>
-            <div style="font-size: 9px">1/person</div>
-          </div> -->
+          <div class="bottom-right">
+            <div class="text-bold">Accompanied By</div>
+            <div style="font-size: 14px">
+              {{ currentTicket.AccompaniedBy }}/person
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -50,8 +51,13 @@
               {{ currentTicket?.AttendeeName }}
             </div>
           </div>
-          <div class="q-mt-sm">
-            <qrcode-vue :value="commonStore.qrValue" :size="120" level="H" />
+          <div class="q-mt-sm" id="qr-code">
+            <qrcode-vue
+              id="qr-code"
+              :value="commonStore.qrValue"
+              :size="120"
+              level="H"
+            />
           </div>
         </div>
         <div class="row q-pa-sm justify-between">
@@ -86,7 +92,7 @@
       </div>
       <hr class="dashed q-mx-lg q-mt-md" />
       <q-card-actions class="q-pt-none" align="center">
-        <div class="text-center q-py-md">
+        <div class="text-center q-py-md" @click="saveImage">
           <q-btn class="book-btn" rounded>
             <div class="row text-white">
               <div class="q-mt-xs text-bold">Save as Image</div>
@@ -106,33 +112,6 @@
         </div>
       </q-card-actions>
     </div>
-    <div class="q-ml-md text-h6">Previous Booked Ticket:</div>
-    <div
-      class="q-pa-md row items-start q-gutter-md"
-      v-for="(obj, index) in OtherBookedTicket"
-      :key="obj.id"
-    >
-      <q-card
-        @click="draftcanvasticket(index, obj)"
-        aria-label="please click to view QR tickets"
-        class="my-card"
-      >
-        <div class="row justify-center q-mt-sm">
-          <qrcode-vue
-            :value="getQrValue(obj.id, obj.AttendeeName)"
-            :size="200"
-            level="H"
-          />
-        </div>
-        <q-card-section>
-          <div class="text-subtitle2">
-            This a ticket for {{ obj.AttendeeName }} with email
-            {{ obj.Personemail }}
-          </div>
-          <div class="text-h6">Event: {{ obj.EventTitle }}</div>
-        </q-card-section>
-      </q-card>
-    </div>
     <QFooter class="footer" v-if="$q.screen.lt.md" />
   </q-page>
 </template>
@@ -145,6 +124,7 @@ import { ref, onMounted, computed } from "vue";
 import { db, collection } from "src/stores/firebase.js";
 import { addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
 import { useCounterStore } from "../stores/example-store";
+import html2canvas from "html2canvas";
 const bookedList = ref([]);
 const commonStore = useCounterStore();
 onMounted(() => {
@@ -157,6 +137,25 @@ onMounted(() => {
     });
   });
 });
+const saveImage = () => {
+  const element = document.getElementById("qr-code");
+
+  html2canvas(element).then((canvas) => {
+    const imgData = canvas.toDataURL("image/png");
+    const fileName = "qr-code.jpeg";
+    downloadBlobImage(imgData, fileName);
+  });
+};
+
+function downloadBlobImage(blob, fileName) {
+  const url = window.URL.createObjectURL(new Blob([blob]));
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", fileName);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 const currentTicket = computed(() =>
   bookedList.value.find((item) => {
     return item.id === commonStore.currentTicket;
@@ -173,11 +172,6 @@ const getQrValue = (id, AttendeeName) => {
     commonStore.eventDetails.id
   );
 };
-const OtherBookedTicket = computed(() =>
-  bookedList.value.filter((item) => {
-    return item.id !== commonStore.currentTicket;
-  })
-);
 const changeDateFormat = (date, format = "DD MMM , YYYY") => {
   return qdate.formatDate(date, format);
 };
@@ -345,7 +339,7 @@ hr.dashed {
 .bottom-left {
   position: absolute;
   bottom: 20px;
-  left: 40px;
+  left: 20px;
 }
 .my-card {
   max-width: 450px;

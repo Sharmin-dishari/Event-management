@@ -3,8 +3,7 @@
     class="foot-btn row flex-center justify-around"
     :class="$q.dark.isActive ? 'bg-dark' : 'bg-grey-2'"
   >
-    <ToggoleBtn />
-    <div
+    <!--  <div
       class="mid-btn row flex-center"
       :style="
         $q.dark.isActive
@@ -12,7 +11,7 @@
           : 'background: rgb(228, 226, 226);'
       "
     >
-      <q-btn
+       <q-btn
         round
         unelevated
         dense
@@ -38,8 +37,8 @@
         icon="location_on"
         :style="$q.dark.isActive ? 'background: #1d2531' : 'background: white'"
         size="18px"
-      />
-    </div>
+      /> 
+    </div>-->
     <div
       class="person-icon row flex-center"
       :style="
@@ -50,12 +49,14 @@
     >
       <q-avatar class="q-pa-none q-ma-none">
         <q-icon
-          name="perm_identity"
+          name="dashboard"
           size="30px"
+          @click="$router.push({ name: 'dashboard' })"
           :class="$q.dark.isActive ? 'text-white' : 'text-black'"
         />
       </q-avatar>
     </div>
+    <ToggoleBtn />
   </div>
 </template>
 

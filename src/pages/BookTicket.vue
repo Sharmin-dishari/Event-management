@@ -8,7 +8,11 @@
             class="itc-input required q-mb-md"
             stack-label
             outlined
-            placeholder="Enter your name"
+            lazy-rules
+            :rules="[
+              (val) => (val && val.length > 0) || 'Please type your full name',
+            ]"
+            label="Enter your name *"
           >
             <template #prepend> <q-icon name="lock" /></template>
           </q-input>
@@ -17,8 +21,12 @@
             class="itc-input required q-mb-md"
             stack-label
             outlined
-            placeholder="Enter your email"
+            label="Enter your email *"
             type="email"
+            :rules="[
+              (val) => !!val || 'Email is required',
+              (val) => validateEmail(val) || 'Type a valid Email',
+            ]"
             clearable
             clear-icon="close"
           >
@@ -31,7 +39,6 @@
             outlined
             label="Gender"
             :options="['Male', 'Female', 'Other']"
-            placeholder="Enter your password"
           >
             <template #prepend> <q-icon name="people" /></template>
           </q-select>
@@ -40,7 +47,12 @@
             class="itc-input required q-mb-md"
             stack-label
             outlined
-            placeholder="Contact Number"
+            :rules="[
+              (val) =>
+                (val !== null && val !== '') ||
+                'Please type your contact number',
+            ]"
+            label="Contact Number"
           >
             <template #prepend> <q-icon name="call" /></template>
           </q-input>
@@ -49,7 +61,7 @@
             class="itc-input required q-mb-md"
             stack-label
             outlined
-            placeholder="Don you have any diet preference?"
+            label="Don you have any diet preference?"
             :type="isPwd ? 'password' : 'text'"
           >
             <template #prepend><q-icon name="coffee" /></template>
@@ -59,7 +71,11 @@
             class="itc-input required"
             stack-label
             outlined
-            placeholder="How many accompanying with you?"
+            :rules="[
+              (val) =>
+                val < 5 || 'Maximum of 4 people can be accompanied with.',
+            ]"
+            label="How many accompanying with you? *"
           >
             <template #prepend><q-icon name="groups" /></template>
           </q-input>
@@ -127,6 +143,11 @@ onMounted(() => {
   form.value.EventId = commonStore.eventDetails.id;
   form.value.EventTitle = commonStore.eventDetails.eventTitle;
 });
+const emailValidationRegex =
+  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const validateEmail = (val) => {
+  return emailValidationRegex.test(val);
+};
 const onSubmit = () => {
   let AttendeeName = form.value.AttendeeName;
   if (isAgree.value !== true) {
@@ -149,6 +170,7 @@ const onSubmit = () => {
           });
           router.push({ name: "my-ticket" });
           isAgree.value = false;
+          form.value = {};
           commonStore.currentTicket = result?._key.path?.segments[1];
           commonStore.qrValue =
             result._key.path.segments[1] +

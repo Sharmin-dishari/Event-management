@@ -57,6 +57,15 @@ const routes = [
           isBack: true,
         },
       },
+      {
+        path: "/my-all-tickets",
+        name: "my-all-tickets",
+        component: () => import("pages/MyTicket.vue"),
+        meta: {
+          requiresAuth: false,
+          isBack: false,
+        },
+      },
     ],
   },
   {

@@ -10,7 +10,7 @@
           </div>
           <div class="q-ml-sm">
             <div class="text-bold">
-              Cameroon
+              {{ auth.currentUser.displayName }}
               <span>
                 <q-btn
                   size="5px"
@@ -23,7 +23,7 @@
                 </q-btn
               ></span>
             </div>
-            <div class="text-caption">Paris, FR</div>
+            <div class="text-caption">{{ auth.currentUser.email }}</div>
           </div>
         </div>
         <div>
@@ -95,6 +95,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
+import { auth } from "src/stores/firebase.js";
 const commonStore = useCounterStore();
 onMounted(() => {
   commonStore.pageTitle = "All News  & Feed";

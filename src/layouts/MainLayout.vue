@@ -76,21 +76,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useCounterStore } from "../stores/example-store";
 import EssentialLink from "components/EssentialLink.vue";
 import { auth } from "src/stores/firebase.js";
-
+import { db, collection } from "src/stores/firebase.js";
+import { onSnapshot } from "firebase/firestore";
 const commonStore = useCounterStore();
 defineOptions({
   name: "MainLayout",
+});
+
+onMounted(() => {
+  const appliedbookings = collection(db, "booking");
+  commonStore.ticketBookingList = [];
+  onSnapshot(appliedbookings, (snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      commonStore.ticketBookingList.push({ ...doc.data(), id: doc.id });
+    });
+  });
 });
 const route = useRoute();
 const router = useRouter();
 const handleBackRoute = () => {
   if (route.name === "my-ticket") {
     router.push({ name: "event-details" });
+  } else if (route.name === "event-details") {
+    router.push({ name: "dashboard" });
   } else {
     router.back();
   }
@@ -114,5 +127,10 @@ const leftDrawerOpen = ref(false);
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
+watchEffect(() => {
+  if (!auth.currentUser) {
+    router.push({ name: "sign-index" });
+  }
+});
 </script>
 <style></style>

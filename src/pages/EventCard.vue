@@ -17,7 +17,15 @@
     </div>
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container">
-        <div v-for="item in eventList" :key="item.id" class="option">
+        <div
+          v-for="item in eventList"
+          :key="item.id"
+          class="option"
+          @click="
+            $router.push({ name: 'event-details', query: item.id });
+            commonStore.eventDetails = item;
+          "
+        >
           <section
             class="art-event-gallery"
             :class="
@@ -48,8 +56,9 @@
               <div class="top-right">
                 <q-btn icon="bookmark" unelevated dense class="button-border" />
               </div>
-              <!-- <div class="bottom-left">
-                <div class="avatar-group">
+
+              <div class="bottom-left">
+                <!-- <div class="avatar-group">
                   <div
                     class="avatar"
                     v-for="(user, index) in users?.slice(0, 3)"
@@ -58,8 +67,17 @@
                     <img :src="user.avatar" />
                   </div>
                   <div class="hidden-avatars">+10</div>
+                </div>-->
+                <div
+                  class="avatar-group"
+                  v-if="commonStore.ticketBookingList?.length"
+                >
+                  <span class="q-mt-md text-bold"
+                    >+
+                    {{ commonStore.ticketBookingList.length }} interested</span
+                  >
                 </div>
-              </div> -->
+              </div>
               <div class="bottom-right">
                 <div no-caps class="date-mark">
                   <div>
@@ -82,7 +100,11 @@
               </q-item-section>
               <q-item-section class="q-mr-sm q-mt-md" side>
                 <!-- <div class="title-font">$125</div> -->
-                <div style="font-size: 9px">1/person</div>
+                <!-- <div
+                  style="font-size: 9px"
+                >
+                 1/Person
+                </div> -->
               </q-item-section>
             </q-item>
           </section>
@@ -183,6 +205,7 @@ const users = ref([
   },
 ]);
 const eventList = ref([]);
+const bookedList = ref([]);
 onMounted(() => {
   const catsRef = collection(db, "RSVPEvents");
   const appliedbookings = collection(db, "booking");
@@ -190,6 +213,12 @@ onMounted(() => {
     eventList.value = [];
     snapshot.docs.forEach((doc) => {
       eventList.value.push({ ...doc.data(), id: doc.id });
+    });
+  });
+  onSnapshot(appliedbookings, (snapshot) => {
+    bookedList.value = [];
+    snapshot.docs.forEach((doc) => {
+      bookedList.value.push({ ...doc.data(), id: doc.id });
     });
   });
 });

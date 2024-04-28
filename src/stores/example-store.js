@@ -5,6 +5,7 @@ export const useCounterStore = defineStore("counter", {
     counter: 0,
     pageTitle: "Default Title",
     userAuthInfo: {},
+    ticketBookingList: [],
     eventDetails: {},
     currentTicket: {},
     qrValue: "",

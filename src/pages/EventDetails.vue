@@ -5,19 +5,75 @@
         class="container q-mt-md q-mx-sm"
         :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
       >
-        <q-img
-          s
+        <!-- <q-img
           :src="commonStore.eventDetails.eventImg"
           alt="Snow"
+          
+        /> -->
+        <q-carousel
+          swipeable
+          animated
+          v-model="slide"
+          :autoplay="autoplay"
           style="border-radius: 20px; height: 300px"
-        />
+          ref="carousel"
+          infinite
+        >
+          <q-carousel-slide
+            :name="1"
+            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/img.jpg?alt=media&token=546b6d33-c513-444e-ad56-d892dee94028"
+          />
+          <q-carousel-slide
+            :name="2"
+            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/demo.jpg?alt=media&token=41ac12ce-8687-423c-a5d1-9ffc59ca626a"
+          />
+          <q-carousel-slide
+            :name="3"
+            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/ces.jpg?alt=media&token=6e88e5a5-10b3-4cc3-b12d-80b3a6293f2a"
+          />
+          <q-carousel-slide
+            :name="4"
+            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/HYD03944.jpg?alt=media&token=3e1a1faf-d7af-472a-af42-28329374bc00"
+          />
+          <q-carousel-slide
+            :name="4"
+            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/HYD03946.jpg?alt=media&token=99b4f9dc-77c4-40a8-a56f-e204ae7a4c11"
+          />
+
+          <template v-slot:control>
+            <q-carousel-control
+              position="top-right"
+              :offset="[10, 10]"
+              class="q-gutter-xs"
+            >
+              <q-btn
+                push
+                round
+                dense
+                color="orange"
+                text-color="black"
+                icon="arrow_left"
+                @click="$refs.carousel.previous()"
+              />
+              <q-btn
+                push
+                round
+                dense
+                color="orange"
+                text-color="black"
+                icon="arrow_right"
+                @click="$refs.carousel.next()"
+              />
+            </q-carousel-control>
+          </template>
+        </q-carousel>
         <div class="top-right">
-          <q-btn icon="bookmark" unelevated dense class="button-bg" />
+          <!-- <q-btn icon="bookmark" unelevated dense class="button-bg" /> -->
         </div>
         <div class="top-left">
           <q-btn
             icon="share"
-            @click="inviteFrnds = true"
+            @click="shareOption"
             unelevated
             dense
             class="button-bg"
@@ -36,7 +92,7 @@
               >
                 <img :src="user.avatar" />
               </div>
-              <div class="q-mt-sm q-pl-sm">10+ interested</div>
+              <div class="q-mt-sm q-pl-sm">10+ interested</div> 
             </div> -->
           </div>
           <div class="bottom-right">
@@ -56,7 +112,14 @@
               </div>
             </div>
             <!-- <div class="text-bold text-h6">$125</div> -->
-            <div style="font-size: 9px">1/person</div>
+            <!-- <div style="font-size: 9px">1/person</div> -->
+            <div style="font-size: 11px" class="q-mt-sm text-right">
+              {{
+                commonStore.eventDetails.totalseat -
+                commonStore.ticketBookingList?.length
+              }}
+              / +Available
+            </div>
           </div>
         </div>
       </div>
@@ -102,14 +165,16 @@
           </q-item-label>
         </q-item-section>
         <q-item-section>
-          <q-item-label class="header-title">Mymuna</q-item-label>
+          <q-item-label class="header-title">{{
+            commonStore.eventDetails.contactPerson
+          }}</q-item-label>
           <q-item-label class="text-caption">Organizer</q-item-label>
         </q-item-section>
-        <q-item-section top>
+        <!-- <q-item-section top>
           <q-item-label class="q-mt-sm">
             <q-badge class="badge-color q-pa-xs q-px-md">Follow</q-badge>
           </q-item-label>
-        </q-item-section>
+        </q-item-section> -->
         <q-item-section side top>
           <q-item-label class="q-mt-sm">
             <q-btn
@@ -194,12 +259,25 @@ import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
 import InviteFriends from "../components/InviteFriends.vue";
 const commonStore = useCounterStore();
+import { Share } from "@capacitor/share";
+const slide = ref(1);
+const autoplay = ref(true);
+const carousel = ref();
 onMounted(() => {
   commonStore.pageTitle = "Event Details";
 });
 const monthName = (monthNumber) => {
   return new Date(2000, monthNumber - 1, 1).toLocaleString("en-US", {
     month: "long",
+  });
+};
+
+const shareOption = async () => {
+  await Share.share({
+    title: "See cool stuff",
+    text: "Really awesome thing you need to see right meow",
+    url: "http://ionicframework.com/",
+    dialogTitle: "Share with buddies",
   });
 };
 const inviteFrnds = ref(false);
@@ -352,7 +430,7 @@ const changeTimeFormat = (date, format = "HH:mm a") => {
 }
 .bottom-left {
   position: absolute;
-  bottom: 8px;
-  left: 40px;
+  bottom: 30px;
+  left: 20px;
 }
 </style>

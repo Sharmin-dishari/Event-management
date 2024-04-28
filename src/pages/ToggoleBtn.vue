@@ -1,14 +1,17 @@
 <template>
-  <label class="switch">
-    <input type="checkbox" id="togBtn" />
+  <label class="switch" @click="$router.push({ name: 'my-all-tickets' })">
+    <input type="checkbox" id="togBtn" v-model="togBtn" />
     <div class="slider round">
       <span class="on">Off</span>
-      <span class="off">Explore</span>
+      <span class="off">My Tickets</span>
     </div>
   </label>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue";
+const togBtn = ref(false);
+</script>
 
 <style>
 .switch {
@@ -29,7 +32,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: black;
+  background-color: rgb(223, 23, 23);
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }

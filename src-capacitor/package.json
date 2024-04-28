@@ -10,6 +10,8 @@
     "@capacitor/app": "^5.0.0",
     "@capacitor/cli": "^5.0.0",
     "@capacitor/core": "^5.0.0",
+    "@capacitor/share": "^6.0.0",
+    "@eoscz/capacitor-plugin-native-file-downloader": "^2.0.1",
     "firebase": "^10.11.1"
   }
 }

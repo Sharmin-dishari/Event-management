@@ -59,11 +59,9 @@ const handleDarkMode = () => {
 const handleSignOut = () => {
   signOut(auth)
     .then(() => {
-      alert("User Signed out");
       router.push({ name: "sign-index" });
     })
     .catch((error) => {
-      // An error happened.
       alert(error.message);
     });
 };
