@@ -53,9 +53,9 @@
                 alt="Snow"
                 style="border-radius: 20px; max-width: 270px; height: 185px"
               />
-              <div class="top-right">
+              <!-- <div class="top-right">
                 <q-btn icon="bookmark" unelevated dense class="button-border" />
-              </div>
+              </div> -->
 
               <div class="bottom-left">
                 <!-- <div class="avatar-group">
@@ -101,7 +101,7 @@
               <q-item-section class="q-mr-sm q-mt-md" side>
                 <!-- <div class="title-font">$125</div> -->
                 <!-- <div
-                  style="font-size: 9px"
+                  style="font-size: 9px" 
                 >
                  1/Person
                 </div> -->
@@ -111,9 +111,9 @@
         </div>
       </div>
     </div>
-    <div class="row justify-between">
+    <div class="row justify-between click-event">
       <div
-        class="q-mb-sm q-mt-md cursor-pointer"
+        class="q-mb-sm q-mt-md cursor-pointer click-event"
         @click="$router.push({ name: 'news-feed' })"
       >
         News & Feed
@@ -293,5 +293,15 @@ onMounted(() => {
 .option {
   display: inline-block;
   padding: 5px 5px 5px 0;
+}
+.click-event-blue:active,
+.click-event-blue:focus {
+  background-color: #efeded80;
+  border-radius: 20px;
+  transition: background-color 3s ease;
+}
+.click-event:hover {
+  background-color: #dad7d780;
+  border-radius: 20px;
 }
 </style>

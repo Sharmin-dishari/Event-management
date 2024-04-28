@@ -11,9 +11,9 @@
         </q-avatar>
         <q-toolbar-title>
           <div class="text-caption text-bold">
-            {{ auth.currentUser.displayName }}
+            {{ auth.currentUser?.displayName }}
           </div>
-          <div class="text-caption">{{ auth.currentUser.email }}</div>
+          <div class="text-caption">{{ auth.currentUser?.email }}</div>
           <!-- <div class="text-caption">Paris, FR</div> -->
         </q-toolbar-title>
 
@@ -58,7 +58,7 @@
     </q-header>
 
     <q-drawer
-      width="350"
+      width="300"
       v-model="leftDrawerOpen"
       show-if-above
       bordered
@@ -128,7 +128,7 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value;
 }
 watchEffect(() => {
-  if (!auth.currentUser) {
+  if (!auth.currentUser || auth.currentUser === null) {
     router.push({ name: "sign-index" });
   }
 });

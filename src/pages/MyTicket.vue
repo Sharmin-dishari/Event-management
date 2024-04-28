@@ -1,10 +1,6 @@
 <template>
   <q-page>
-    <div :style="$q.screen.gt.sm ? 'margin: 0 auto' : 'row q-gutter-md'">
-      <div class="header-title q-pa-md">
-        {{ commonStore.eventDetails.eventTitle }}
-      </div>
-    </div>
+    <div :style="$q.screen.gt.sm ? 'margin: 0 auto' : 'row q-gutter-md'"></div>
     <div style="padding-bottom: 60px">
       <div
         class="q-pb-md row items-start q-gutter-md"
@@ -17,6 +13,9 @@
           aria-label="please click to view QR tickets"
           class="my-card"
         >
+          <div class="header-title q-pa-md">
+            {{ obj.EventTitle }}
+          </div>
           <div
             class="q-px-md q-mx-sm"
             :class="$q.dark.isActive ? 'bg-card' : 'bg-grey-2'"
@@ -40,30 +39,29 @@
             </div>
             <div class="row q-pa-sm justify-between">
               <div class="q-mt-sm">
-                <div>Date</div>
+                <div>Phone Number</div>
                 <div class="text-bold text-h6">
-                  {{ changeDateFormat(commonStore.eventDetails.eventDate) }}
+                  {{ obj.PhoneNumber }}
                 </div>
               </div>
-              <div class="q-mt-sm" v-if="commonStore.eventDetails?.eventTime">
-                <div class="text-right">Time</div>
+              <div class="q-mt-sm">
+                <div class="text-right">Gender</div>
                 <div class="text-bold text-h6">
-                  {{
-                    changeTimeFormat(commonStore.eventDetails.eventTime) ||
-                    "Event Time"
-                  }}
+                  {{ obj.Gender }}
                 </div>
               </div>
             </div>
             <div class="row q-pa-sm justify-between">
               <div class="q-mt-sm">
-                <div>Section</div>
-                <div class="text-bold text-h6">{{ obj.AccompaniedBy }}</div>
+                <div>Email</div>
+                <div class="">
+                  {{ obj.Personemail }}
+                </div>
               </div>
               <div class="q-mt-sm">
-                <div>Seat</div>
-                <div class="text-bold text-h6">
-                  {{ commonStore.eventDetails.totalseat }}
+                <div>Accompanied By</div>
+                <div class="text-bold text-right q-mr-sm text-h6">
+                  {{ obj.AccompaniedBy }}
                 </div>
               </div>
             </div>
