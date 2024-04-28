@@ -5,7 +5,7 @@
         <div>
           <q-input
             v-model="form.AttendeeName"
-            class="itc-input required q-mb-md"
+            class="itc-input required q-mb-sm"
             stack-label
             outlined
             lazy-rules
@@ -18,7 +18,7 @@
           </q-input>
           <q-input
             v-model="form.Personemail"
-            class="itc-input required q-mb-md"
+            class="itc-input required q-mb-sm"
             stack-label
             outlined
             label="Enter your email *"
@@ -34,7 +34,7 @@
           </q-input>
           <q-select
             v-model="form.Gender"
-            class="itc-input required q-mb-md"
+            class="itc-input required q-mb-lg"
             stack-label
             outlined
             label="Gender"
@@ -44,7 +44,7 @@
           </q-select>
           <q-input
             v-model="form.PhoneNumber"
-            class="itc-input required q-mb-md"
+            class="itc-input required q-mb-sm"
             stack-label
             outlined
             :rules="[
@@ -58,7 +58,7 @@
           </q-input>
           <q-input
             v-model="form.Dietpreference"
-            class="itc-input required q-mb-md"
+            class="itc-input required q-mb-lg"
             stack-label
             outlined
             label="Don you have any diet preference?"
@@ -81,7 +81,7 @@
           </q-input>
         </div>
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="q-py-none q-py-sm">
         <q-item class="row q-px-none">
           <q-toggle
             size="md"
@@ -168,9 +168,18 @@ const onSubmit = () => {
             icon: "cloud_done",
             message: `Ticket booked successfully for event: ${commonStore.eventDetails.eventTitle}`,
           });
-          router.push({ name: "my-ticket" });
+
           isAgree.value = false;
-          form.value = {};
+          const form = ref({
+            AttendeeName: "",
+            Personemail: "",
+            Gender: "",
+            Dietpreference: "",
+            PhoneNumber: "",
+            AccompaniedBy: "",
+            EventId: "",
+            EventTitle: "",
+          });
           commonStore.currentTicket = result?._key.path?.segments[1];
           commonStore.qrValue =
             result._key.path.segments[1] +
@@ -180,6 +189,7 @@ const onSubmit = () => {
             commonStore.eventDetails.eventTitle +
             "@" +
             commonStore.eventDetails.id;
+          router.push({ name: "my-ticket" });
         }
       })
       .catch((error) => {

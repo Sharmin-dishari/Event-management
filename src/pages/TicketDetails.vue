@@ -30,7 +30,7 @@
           <div class="bottom-right">
             <div class="text-bold">Accompanied By</div>
             <div style="font-size: 14px">
-              {{ currentTicket.AccompaniedBy }}/person
+              {{ currentTicket?.AccompaniedBy }}/person
             </div>
           </div>
         </div>
