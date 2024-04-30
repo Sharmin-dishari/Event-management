@@ -2,20 +2,30 @@
   <div>
     <q-item class="q-pr-none">
       <div class="q-mt-xl col-grow">
-        <q-avatar size="60px">
-          <img src="/boy.png" />
-        </q-avatar>
-        <div class="text-h6">Madhu Mia</div>
+        <div class="row">
+          <q-avatar size="40px">
+            <img src="/boy.png" />
+          </q-avatar>
+          <div>
+            <div class="q-ml-sm text-bold">
+              {{ auth.currentUser?.displayName }}
+            </div>
+            <div class="q-ml-sm text-caption">
+              {{ auth.currentUser?.email }}
+            </div>
+          </div>
+        </div>
         <div
           class="row q-mt-lg q-pa-sm click-event"
           v-for="(item, index) in navLinks"
           :key="index"
-          @click="$router.push({ name: `${item.hash}` })"
+          @click="handleNavLink(item)"
         >
           <div>
             <q-icon :name="item.icon" size="25px" />
           </div>
           <div class="q-ml-md" style="font-size: 16px">{{ item.name }}</div>
+          <!-- <div class="q-ml-md" style="font-size: 16px">{{ item.caption }}</div> -->
         </div>
         <div class="row q-mt-lg q-pa-sm click-event" @click="handleSignOut">
           <div>
@@ -43,7 +53,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useQuasar, Dark } from "quasar";
+import { Dark } from "quasar";
 import { signOut } from "firebase/auth";
 import { auth } from "src/stores/firebase.js";
 import { useRouter } from "vue-router";
@@ -65,6 +75,13 @@ const handleSignOut = () => {
       alert(error.message);
     });
 };
+const handleNavLink = (item) => {
+  if (item.hash) {
+    router.push({ name: `${item.hash}` });
+  } else {
+    window.location.href = item.link;
+  }
+};
 const navLinks = [
   {
     icon: "person_outline",
@@ -84,7 +101,8 @@ const navLinks = [
   {
     icon: "mail_outline",
     name: "Contact Us",
-    hash: "dashboard",
+    caption: "support@mymanu.co.uk",
+    link: "mailto:support@mymanu.co.uk?subject= Event Query",
   },
   {
     icon: "settings",

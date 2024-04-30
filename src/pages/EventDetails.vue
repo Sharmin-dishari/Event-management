@@ -299,7 +299,7 @@ const users = ref([
     avatar: "boy.png",
   },
 ]);
-const changeDateFormat = (date, format = "DD MMM , YYYY") => {
+const changeDateFormat = (date, format = "MM/DD/YYYY") => {
   return qdate.formatDate(date, format);
 };
 const changeTimeFormat = (date, format = "HH:mm a") => {

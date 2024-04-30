@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div
-      style="margin-bottom: 60px"
+      style="margin-bottom: 80px"
       :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
     >
       <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
@@ -64,16 +64,13 @@
           <div class="q-mt-sm">
             <div>Date</div>
             <div class="text-bold text-h6">
-              {{ changeDateFormat(commonStore.eventDetails.eventDate) }}
+              {{ commonStore.eventDetails.eventDate }}
             </div>
           </div>
           <div class="q-mt-sm" v-if="commonStore.eventDetails?.eventTime">
             <div class="text-right">Time</div>
             <div class="text-bold text-h6">
-              {{
-                changeTimeFormat(commonStore.eventDetails.eventTime) ||
-                "Event Time"
-              }}
+              {{ commonStore.eventDetails.eventTime }}
             </div>
           </div>
         </div>
@@ -92,7 +89,7 @@
       </div>
       <hr class="dashed q-mx-lg q-mt-md" />
       <q-card-actions class="q-pt-none" align="center">
-        <div class="text-center q-py-md" @click="saveImage">
+        <div class="text-center q-pt-sm" @click="saveImage">
           <q-btn class="book-btn" rounded>
             <div class="row text-white">
               <div class="q-mt-xs text-bold">Save as Image</div>
@@ -122,7 +119,7 @@ import QFooter from "../pages/QFooter.vue";
 import QrcodeVue from "qrcode.vue";
 import { ref, onMounted, computed } from "vue";
 import { db, collection } from "src/stores/firebase.js";
-import { addDoc, onSnapshot, doc, updateDoc } from "firebase/firestore";
+import { onSnapshot } from "firebase/firestore";
 import { useCounterStore } from "../stores/example-store";
 import html2canvas from "html2canvas";
 const bookedList = ref([]);
@@ -161,17 +158,6 @@ const currentTicket = computed(() =>
     return item.id === commonStore.currentTicket;
   })
 );
-const getQrValue = (id, AttendeeName) => {
-  return (
-    id +
-    "@" +
-    AttendeeName +
-    "@" +
-    commonStore.eventDetails.eventTitle +
-    "@" +
-    commonStore.eventDetails.id
-  );
-};
 const changeDateFormat = (date, format = "DD MMM , YYYY") => {
   return qdate.formatDate(date, format);
 };

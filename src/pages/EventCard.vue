@@ -15,12 +15,11 @@
         />
       </div> -->
     </div>
-    <div class="scroll-wrapper">
+    <div class="scroll-wrapper" v-if="eventList.length > 1">
       <div class="horizontal-scroll-container">
         <div
           v-for="item in eventList"
           :key="item.id"
-          class="option"
           @click="
             $router.push({ name: 'event-details', query: item.id });
             commonStore.eventDetails = item;
@@ -111,6 +110,98 @@
         </div>
       </div>
     </div>
+    <div v-else>
+      <div
+        v-for="item in eventList"
+        :key="item.id"
+        @click="
+          $router.push({ name: 'event-details', query: item.id });
+          commonStore.eventDetails = item;
+        "
+      >
+        <section
+          class="art-event-gallery-single"
+          :class="
+            $q.dark.isActive ? 'dark-card text-white' : 'bg-white text-black'
+          "
+        >
+          <div class="row justify-between q-mt-sm">
+            <div class="text-h6">{{ item.eventTitle }}</div>
+            <q-btn
+              round
+              unelevated
+              dense
+              icon="north_east"
+              @click="
+                $router.push({ name: 'event-details', query: item.id });
+                commonStore.eventDetails = item;
+              "
+              class="text-black"
+              color="grey-3"
+            />
+          </div>
+          <div class="container q-mt-md">
+            <q-img
+              :src="item.eventImg"
+              alt="Snow"
+              style="border-radius: 20px; max-width: 450px"
+            />
+            <!-- <div class="top-right">
+                <q-btn icon="bookmark" unelevated dense class="button-border" />
+              </div> -->
+
+            <div class="bottom-left">
+              <!-- <div class="avatar-group">
+                  <div
+                    class="avatar"
+                    v-for="(user, index) in users?.slice(0, 3)"
+                    :key="index"
+                  >
+                    <img :src="user.avatar" />
+                  </div>
+                  <div class="hidden-avatars">+10</div>
+                </div>-->
+              <div
+                class="avatar-group"
+                v-if="commonStore.ticketBookingList?.length"
+              >
+                <span class="q-mt-md text-bold"
+                  >+ {{ commonStore.ticketBookingList.length }} interested</span
+                >
+              </div>
+            </div>
+            <div class="bottom-right">
+              <div no-caps class="date-mark">
+                <div>
+                  <div>{{ item.eventDate.split("/")[0] }}</div>
+                  <div style="font-size: 9px">
+                    {{ monthName(item.eventDate.split("/")[1]) }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <q-item class="q-pa-none row justify-between">
+            <q-item-section class="q-mt-sm">
+              <div class="title-font ellipsis">
+                {{ item.eventSummary.substring(0, 20) }}...
+              </div>
+              <div style="font-size: 9px">
+                {{ item.eventLocation }}
+              </div>
+            </q-item-section>
+            <q-item-section class="q-mr-sm q-mt-md" side>
+              <!-- <div class="title-font">$125</div> -->
+              <!-- <div
+                  style="font-size: 9px" 
+                >
+                 1/Person
+                </div> -->
+            </q-item-section>
+          </q-item>
+        </section>
+      </div>
+    </div>
     <div class="row justify-between">
       <div
         class="q-mb-sm q-mt-md cursor-pointer click-event"
@@ -131,39 +222,7 @@
         />
       </div> -->
     </div>
-    <div class="scroll-wrapper">
-      <div class="horizontal-scroll-container">
-        <div v-for="item in 4" :key="item.id" class="option">
-          <section
-            class="vedio-event"
-            :class="
-              $q.dark.isActive ? 'dark-card text-white' : 'bg-white text-black'
-            "
-          >
-            <div class="row justify-between q-mt-sm">
-              <div>Art event gallary</div>
-              <q-btn
-                round
-                unelevated
-                dense
-                size="10px"
-                icon="north_east"
-                class="text-black"
-                color="grey-3"
-              />
-            </div>
-
-            <div class="container q-mt-md">
-              <q-video
-                :ratio="16 / 13"
-                style="border-radius: 12px"
-                src="https://www.youtube.com/embed/k3_tw44QsZQ?rel=0"
-              />
-            </div>
-          </section>
-        </div>
-      </div>
-    </div>
+    <VideoIndex />
   </div>
 </template>
 
@@ -172,6 +231,7 @@ import { ref, onMounted } from "vue";
 import { db, collection } from "src/stores/firebase.js";
 import { onSnapshot } from "firebase/firestore";
 import { useCounterStore } from "../stores/example-store";
+import VideoIndex from "../components/VideoIndex.vue";
 const commonStore = useCounterStore();
 const options = ref(["1", "2"]);
 const model = ref(null);
@@ -180,6 +240,7 @@ const monthName = (monthNumber) => {
     month: "long",
   });
 };
+
 const list = ref([
   {
     id: 1,
@@ -269,6 +330,14 @@ onMounted(() => {
   border-radius: 25px;
   width: 300px;
   height: 329px;
+  padding: 15px;
+  opacity: 0px;
+}
+.art-event-gallery-single {
+  border: 1px solid #ddd; /* Add a 1px solid border in light gray */
+  position: relative; /* This allows us to position the button relatively inside the container */
+  border-radius: 25px;
+  max-width: 450px;
   padding: 15px;
   opacity: 0px;
 }
