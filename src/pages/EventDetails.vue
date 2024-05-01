@@ -135,7 +135,7 @@
           </div>
         </div>
       </div>
-      <div class="q-ma-sm row">
+      <div class="q-ma-sm row" @click="shareLocation">
         <q-btn icon="pin_drop" unelevated dense class="button-border" />
         <div class="q-ml-md">
           <!-- <div>Gala Convention Center</div> -->
@@ -260,6 +260,7 @@ import { useCounterStore } from "../stores/example-store";
 import InviteFriends from "../components/InviteFriends.vue";
 const commonStore = useCounterStore();
 import { Share } from "@capacitor/share";
+import { StartNavigation } from "@proteansoftware/capacitor-start-navigation";
 const slide = ref(1);
 const autoplay = ref(true);
 const carousel = ref();
@@ -278,6 +279,17 @@ const shareOption = async () => {
     text: "Really awesome thing you need to see right meow",
     url: "http://ionicframework.com/",
     dialogTitle: "Share with buddies",
+  });
+};
+const shareLocation = () => {
+  StartNavigation.launchMapsApp({
+    address: {
+      street: "Market Place",
+      city: "Warwick",
+      postalCode: "CV34 4SA",
+      Country: "United Kingdom",
+    },
+    name: "Example location",
   });
 };
 const inviteFrnds = ref(false);
