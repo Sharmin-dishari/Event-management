@@ -113,6 +113,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
+import { useRouter } from "vue-router";
+const router = useRouter();
 const commonStore = useCounterStore();
 onMounted(() => {
   commonStore.pageTitle = "All News  & Feed";

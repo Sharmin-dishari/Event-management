@@ -222,7 +222,7 @@
         />
       </div> -->
     </div>
-    <VideoIndex />
+    <VideoIndex v-if="videoList.length" :video-list="videoList[0].videolist" />
   </div>
 </template>
 
@@ -267,6 +267,7 @@ const users = ref([
 ]);
 const eventList = ref([]);
 const bookedList = ref([]);
+const videoList = ref([]);
 onMounted(() => {
   const catsRef = collection(db, "RSVPEvents");
   const appliedbookings = collection(db, "booking");
@@ -274,6 +275,14 @@ onMounted(() => {
     eventList.value = [];
     snapshot.docs.forEach((doc) => {
       eventList.value.push({ ...doc.data(), id: doc.id });
+    });
+  });
+
+  const videos = collection(db, "NewsnFeedvideo");
+  videoList.value = [];
+  onSnapshot(videos, (snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      videoList.value.push({ ...doc.data(), id: doc.id });
     });
   });
   onSnapshot(appliedbookings, (snapshot) => {
@@ -367,12 +376,12 @@ onMounted(() => {
 .click-event-blue:focus {
   background-color: #efeded80;
   border-radius: 20px;
-  padding: 5px;
+  /* padding: 5px; */
   transition: background-color 3s ease;
 }
 .click-event:hover {
   background-color: #dad7d780;
   border-radius: 20px;
-  padding: 5px;
+  /* padding: 5px; */
 }
 </style>

@@ -2,11 +2,7 @@
   <div>
     <div class="scroll-wrapper">
       <div class="horizontal-scroll-container" v-if="videoList.length">
-        <div
-          v-for="item in videoList[0].videolist"
-          :key="item.id"
-          class="option"
-        >
+        <div v-for="item in videoList" :key="item.id" class="option">
           <section
             class="vedio-event"
             :class="
@@ -14,7 +10,7 @@
             "
           >
             <div class="row justify-between q-mt-sm" @click="openModal(item)">
-              <div>Art event gallary</div>
+              <div>{{ title }}</div>
               <q-btn
                 round
                 unelevated
@@ -56,20 +52,19 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from "vue";
-import { db, collection } from "src/stores/firebase.js";
-import { onSnapshot } from "firebase/firestore";
-onMounted(() => {
-  const videos = collection(db, "NewsnFeedvideo");
-  videoList.value = [];
-  onSnapshot(videos, (snapshot) => {
-    snapshot.docs.forEach((doc) => {
-      videoList.value.push({ ...doc.data(), id: doc.id });
-    });
-  });
+import { ref } from "vue";
+defineProps({
+  videoList: {
+    type: Array,
+    default: () => [],
+  },
+  title: {
+    type: String,
+    default: () => "Art event galary",
+  },
 });
 const modalOpen = ref(false);
-const videoList = ref(false);
+
 const selectedVideo = ref(null);
 const openModal = (item) => {
   modalOpen.value = true;

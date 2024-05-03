@@ -8,6 +8,7 @@ export const useCounterStore = defineStore("counter", {
     ticketBookingList: [],
     eventDetails: {},
     currentTicket: {},
+    newsDetails: {},
     qrValue: "",
   }),
   getters: {

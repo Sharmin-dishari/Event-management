@@ -39,22 +39,32 @@
         <q-carousel
           style="border-radius: 20px"
           animated
-          v-model="slide"
+          v-model="slide1"
           arrows
-          height="400px"
+          height="350px"
           navigation
           infinite
         >
           <q-carousel-slide
-            :name="index1"
+            :name="index1 + 1"
+            @click="handleDetails(1)"
             v-for="(image, index1) in videoList[0]?.news1imagelist"
             :key="index1"
             :img-src="image"
           />
         </q-carousel>
       </div>
-      <div class="text-h6 q-ma-sm">
-        {{ videoList[0].news1.substring(0, 20) }} ...
+      <div
+        class="text-h6 q-ma-sm"
+        v-if="!readMore && videoList[0].news1.length > 40"
+      >
+        {{ videoList[0].news1.substring(0, 40) }}
+        <span class="text-caption text-blue q-ml-sm" @click="readMore = true"
+          >Read More</span
+        >
+      </div>
+      <div v-else class="text-h6 q-ma-sm" @click="readMore = false">
+        {{ videoList[0].news1 }}
       </div>
       <q-separator class="q-my-md" />
       <div
@@ -64,22 +74,32 @@
         <q-carousel
           style="border-radius: 20px"
           animated
-          v-model="slide"
+          v-model="slide2"
           arrows
-          height="400px"
+          height="350px"
           navigation
           infinite
         >
           <q-carousel-slide
-            :name="index2"
+            :name="index2 + 1"
+            @click="handleDetails(2)"
             v-for="(image, index2) in videoList[0]?.news2imagelist"
             :key="index2"
             :img-src="image"
           />
         </q-carousel>
       </div>
-      <div class="text-h6 q-ma-sm">
-        {{ videoList[0].news2.substring(0, 20) }} ...
+      <div
+        class="text-h6 q-ma-sm"
+        v-if="!readMore2 && videoList[0].news2.length > 40"
+      >
+        {{ videoList[0].news2.substring(0, 40) }}
+        <span class="text-caption text-blue q-ml-sm" @click="readMore2 = true"
+          >Read More</span
+        >
+      </div>
+      <div v-else class="text-h6 q-ma-sm" @click="readMore2 = false">
+        {{ videoList[0].news2 }}
       </div>
       <q-separator class="q-my-md" />
       <div
@@ -89,22 +109,32 @@
         <q-carousel
           style="border-radius: 20px"
           animated
-          v-model="slide"
+          v-model="slide3"
           arrows
-          height="400px"
+          height="350px"
           navigation
           infinite
         >
           <q-carousel-slide
-            :name="index3"
+            :name="index3 + 1"
+            @click="handleDetails(3)"
             v-for="(image, index3) in videoList[0]?.news3imagelist"
             :key="index3"
             :img-src="image"
           />
         </q-carousel>
       </div>
-      <div class="text-h6 q-ma-sm">
-        {{ videoList[0].news3.substring(0, 20) }} ...
+      <div
+        class="text-h6 q-ma-sm"
+        v-if="!readMore3 && videoList[0].news3.length > 40"
+      >
+        {{ videoList[0].news3.substring(0, 40) }}
+        <span class="text-caption text-blue q-ml-sm" @click="readMore3 = true"
+          >Read More</span
+        >
+      </div>
+      <div v-else class="text-h6 q-ma-sm" @click="readMore3 = false">
+        {{ videoList[0].news3 }}
       </div>
       <q-separator class="q-my-md" />
       <div
@@ -114,25 +144,56 @@
         <q-carousel
           style="border-radius: 20px"
           animated
-          v-model="slide"
+          v-model="slide4"
           arrows
-          height="400px"
+          height="350px"
           navigation
           infinite
         >
           <q-carousel-slide
-            :name="index4"
+            :name="index4 + 1"
+            @click="handleDetails(4)"
             v-for="(image, index4) in videoList[0]?.news4imagelist"
             :key="index4"
             :img-src="image"
           />
         </q-carousel>
       </div>
-      <div class="text-h6 q-ma-sm">
-        {{ videoList[0].news4.substring(0, 20) }} ...
+      <div
+        class="text-h6 q-ma-sm"
+        v-if="!readMore4 && videoList[0].news4.length > 40"
+      >
+        {{ videoList[0].news4.substring(0, 40) }}
+        <span class="text-caption text-blue q-ml-sm" @click="readMore4 = true"
+          >Read More</span
+        >
+      </div>
+      <div v-else class="text-h6 q-ma-sm" @click="readMore4 = false">
+        {{ videoList[0].news4 }}
       </div>
       <q-separator class="q-my-md" />
-
+      <div
+        class="q-mt-md"
+        v-if="videoList?.length && videoList[0]?.news5videolist"
+      >
+        <video-list
+          :video-list="videoList[0]?.news5videolist"
+          title="Event Galary"
+        />
+      </div>
+      <div
+        class="text-h6 q-ma-sm"
+        @click="handleDetails(5)"
+        v-if="!readMore5 && videoList[0].news5.length > 40"
+      >
+        {{ videoList[0].news5.substring(0, 40) }}
+        <span class="text-caption text-blue q-ml-sm" @click="readMore5 = true"
+          >Read More</span
+        >
+      </div>
+      <div v-else class="text-h6 q-ma-sm" @click="readMore5 = false">
+        {{ videoList[0].news5 }}
+      </div>
       <!-- <div class="row justify-between q-mt-sm">
         <div class="row">
           <q-btn round icon="favorite_border" flat />
@@ -166,11 +227,13 @@
 import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
 import { auth } from "src/stores/firebase.js";
-const commonStore = useCounterStore();
-
+import { useRouter } from "vue-router";
 import { db, collection } from "src/stores/firebase.js";
 import { onSnapshot } from "firebase/firestore";
+import VideoList from "../components/VideoIndex.vue";
 const videoList = ref([]);
+const router = useRouter();
+const commonStore = useCounterStore();
 onMounted(() => {
   commonStore.pageTitle = "All News  & Feed";
   const videos = collection(db, "NewsnFeedvideo");
@@ -181,7 +244,23 @@ onMounted(() => {
     });
   });
 });
-const slide = ref(1);
+const handleDetails = (index) => {
+  commonStore.newsDetails = {
+    [`news${index}`]: videoList.value[0][`news${index}`],
+    [`news${index}imagelist`]: videoList.value[0][`news${index}imagelist`],
+    [`news${index}videolist`]: videoList.value[0][`news${index}videolist`],
+  };
+  // router.push({ name: "news-details" });
+};
+const readMore = ref(false);
+const readMore2 = ref(false);
+const readMore3 = ref(false);
+const readMore4 = ref(false);
+const readMore5 = ref(false);
+const slide1 = ref(1);
+const slide2 = ref(1);
+const slide3 = ref(1);
+const slide4 = ref(1);
 </script>
 
 <style>
