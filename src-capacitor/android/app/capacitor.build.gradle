@@ -14,6 +14,7 @@ dependencies {
     implementation project(':capacitor-filesystem')
     implementation project(':capacitor-share')
     implementation project(':eoscz-capacitor-plugin-native-file-downloader')
+    implementation project(':proteansoftware-capacitor-start-navigation')
 
 }
 

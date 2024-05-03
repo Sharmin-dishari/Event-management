@@ -20,24 +20,10 @@
           infinite
         >
           <q-carousel-slide
-            :name="1"
-            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/img.jpg?alt=media&token=546b6d33-c513-444e-ad56-d892dee94028"
-          />
-          <q-carousel-slide
-            :name="2"
-            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/demo.jpg?alt=media&token=41ac12ce-8687-423c-a5d1-9ffc59ca626a"
-          />
-          <q-carousel-slide
-            :name="3"
-            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/ces.jpg?alt=media&token=6e88e5a5-10b3-4cc3-b12d-80b3a6293f2a"
-          />
-          <q-carousel-slide
-            :name="4"
-            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/HYD03944.jpg?alt=media&token=3e1a1faf-d7af-472a-af42-28329374bc00"
-          />
-          <q-carousel-slide
-            :name="4"
-            img-src="https://firebasestorage.googleapis.com/v0/b/event-app-5d176.appspot.com/o/HYD03946.jpg?alt=media&token=99b4f9dc-77c4-40a8-a56f-e204ae7a4c11"
+            v-for="(item, index) in commonStore.eventDetails.imageslide1"
+            :name="index"
+            :key="index"
+            :img-src="item"
           />
 
           <template v-slot:control>
@@ -259,8 +245,8 @@ import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
 import InviteFriends from "../components/InviteFriends.vue";
 const commonStore = useCounterStore();
-import { Share } from "@capacitor/share";
-import { StartNavigation } from "@proteansoftware/capacitor-start-navigation";
+// import { Share } from "@capacitor/share";
+// import { StartNavigation } from "@proteansoftware/capacitor-start-navigation";
 const slide = ref(1);
 const autoplay = ref(true);
 const carousel = ref();

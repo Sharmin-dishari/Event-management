@@ -16,3 +16,6 @@ project(':capacitor-share').projectDir = new File('../node_modules/@capacitor/sh
 
 include ':eoscz-capacitor-plugin-native-file-downloader'
 project(':eoscz-capacitor-plugin-native-file-downloader').projectDir = new File('../node_modules/@eoscz/capacitor-plugin-native-file-downloader/android')
+
+include ':proteansoftware-capacitor-start-navigation'
+project(':proteansoftware-capacitor-start-navigation').projectDir = new File('../node_modules/@proteansoftware/capacitor-start-navigation/android')

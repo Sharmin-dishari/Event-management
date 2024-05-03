@@ -29,7 +29,7 @@
         <div>
           <span><q-btn label="4" outline size="8px" round /></span>
           <span class="q-ml-sm">14 Feb, 2024</span>
-          <span><q-btn icon="more_horiz" /></span>
+          <span><q-btn flat icon="more_horiz" /></span>
         </div>
       </div>
       <div class="q-mt-md">
