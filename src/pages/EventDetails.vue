@@ -52,7 +52,7 @@
           <div class="top-right">
             <!-- <q-btn icon="bookmark" unelevated dense class="button-bg" /> -->
           </div>
-          <div class="top-left">
+          <!-- <div class="top-left">
             <q-btn
               icon="share"
               @click="captureAndShare"
@@ -60,7 +60,7 @@
               dense
               class="button-bg"
             />
-          </div>
+          </div> -->
           <div class="content">
             <div class="bottom-left">
               <!-- <div class="text-bold text-h6" style="margin-left: -40px">
@@ -244,6 +244,7 @@ import { useCounterStore } from "../stores/example-store";
 import InviteFriends from "../components/InviteFriends.vue";
 import html2canvas from "html2canvas";
 const commonStore = useCounterStore();
+import { Filesystem, Directory } from "@capacitor/filesystem";
 import { Share } from "@capacitor/share";
 import { StartNavigation } from "@proteansoftware/capacitor-start-navigation";
 const slide = ref(1);
@@ -257,6 +258,19 @@ const monthName = (monthNumber) => {
     month: "long",
   });
 };
+async function createFileFromBase64(base64Data, fileName) {
+  try {
+    const result = await Filesystem.writeFile({
+      path: fileName,
+      data: base64Data,
+      mimeType: "image/png",
+      directory: Directory.Documents,
+    });
+    return result.uri;
+  } catch (error) {
+    return null;
+  }
+}
 const baseImage = ref();
 const captureAndShare = async () => {
   try {
@@ -266,28 +280,15 @@ const captureAndShare = async () => {
       backgroundColor: null,
       scale: 2,
     });
-
-    // Convert the canvas to a base64 data URL
     const imageDataUrl = canvas.toDataURL("image/png");
-
-    // Set baseImage with the base64 image data
     baseImage.value = imageDataUrl;
-
-    // Convert base64 image data to a Blob object
-    const base64Data = imageDataUrl.split(",")[1];
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: "image/png" });
-
-    // Share the image using Capacitor Share plugin
-    await Share.share({
-      title: "Shared Image",
-      files: [blob], // Pass the Blob object as files
-      mimeType: "image/png",
+    createFileFromBase64(imageDataUrl, "qr-code.png").then(async (result) => {
+      console.log(result, "result");
+      await Share.share({
+        title: "Shared Image",
+        url: result,
+        mimeType: "image/png",
+      });
     });
   } catch (error) {
     console.error("Error capturing and sharing image:", error);

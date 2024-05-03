@@ -4,7 +4,7 @@
       style="padding-bottom: 100px"
       :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
     >
-      <div id="qr-code">
+      <div>
         <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
           <!-- <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" /> -->
           <q-img
@@ -52,7 +52,7 @@
                 {{ currentTicket?.AttendeeName }}
               </div>
             </div>
-            <div class="q-mt-sm">
+            <div class="q-mt-sm" id="qr-code">
               <qrcode-vue :value="commonStore.qrValue" :size="120" level="H" />
             </div>
           </div>
@@ -120,6 +120,7 @@ import { onSnapshot } from "firebase/firestore";
 import { useCounterStore } from "../stores/example-store";
 import html2canvas from "html2canvas";
 import { Share } from "@capacitor/share";
+import { Filesystem, Directory } from "@capacitor/filesystem";
 const bookedList = ref([]);
 const commonStore = useCounterStore();
 onMounted(() => {
@@ -133,6 +134,19 @@ onMounted(() => {
   });
 });
 const baseImage = ref();
+async function createFileFromBase64(base64Data, fileName) {
+  try {
+    const result = await Filesystem.writeFile({
+      path: fileName,
+      data: base64Data,
+      mimeType: "image/png",
+      directory: Directory.Documents,
+    });
+    return result.uri;
+  } catch (error) {
+    return null;
+  }
+}
 const captureAndShare = async () => {
   try {
     const contentToCapture = document.getElementById("qr-code");
@@ -141,57 +155,21 @@ const captureAndShare = async () => {
       backgroundColor: null,
       scale: 2,
     });
-
-    // Convert the canvas to a base64 data URL
     const imageDataUrl = canvas.toDataURL("image/png");
-
-    // Set baseImage with the base64 image data
     baseImage.value = imageDataUrl;
-
-    // Convert base64 image data to a Blob object
-    const base64Data = imageDataUrl.split(",")[1];
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: "image/png" });
-
-    // Share the image using Capacitor Share plugin
-    await Share.share({
-      title: "Shared Image",
-      files: [blob], // Pass the Blob object as files
-      mimeType: "image/png",
+    createFileFromBase64(imageDataUrl, "qr-code.png").then(async (result) => {
+      console.log(result, "result");
+      await Share.share({
+        title: "Shared Image",
+        url: result,
+        mimeType: "image/png",
+      });
     });
   } catch (error) {
     console.error("Error capturing and sharing image:", error);
   }
 };
-// const captureAndShare = async () => {
-//   try {
-//     const contentToCapture = document.getElementById("qr-code");
-//     console.log(contentToCapture);
 
-//     // Use html2canvas to capture the content as an image
-//     const canvas = await html2canvas(contentToCapture, {
-//       backgroundColor: null, // Use the background color of the div
-//       scale: 2, // Increase the scale for better image quality
-//     });
-
-//     // Convert the canvas to a base64 data URL
-//     baseImage.value = canvas.toDataURL("image/png");
-//     console.log(baseImage, "imageDataUrl");
-//     // Share the image using Capacitor Share plugin
-//     await Share.share({
-//       title: "Shared Image",
-//       fileData: baseImage,
-//       mimeType: "image/png",
-//     });
-//   } catch (error) {
-//     console.error("Error capturing and sharing image:", error);
-//   }
-// };
 const saveImage = () => {
   const element = document.getElementById("qr-code");
 
