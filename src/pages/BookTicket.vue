@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <q-form @submit="onSubmit">
-      <q-card-section>
+      <q-card-section class="q-pb-none q-px-md">
         <div>
           <q-input
             v-model="form.AttendeeName"
@@ -81,17 +81,15 @@
           </q-input>
         </div>
       </q-card-section>
-      <q-card-section class="q-py-none q-py-sm">
-        <q-item class="row q-px-none">
+      <q-card-section class="q-py-none q-py-none">
+        <q-item class="row q-pa-none">
           <q-toggle
             size="md"
             @update:model-value="isAgree = !isAgree"
             v-model="isAgree"
             val="dark"
           />
-          <div class="q-mt-sm">
-            I agree & consent to receiving update about the event
-          </div>
+          <div>I agree & consent to receiving update about the event</div>
         </q-item>
       </q-card-section>
       <q-card-actions class="q-pt-none" align="center">
