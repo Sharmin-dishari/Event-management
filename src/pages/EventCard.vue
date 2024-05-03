@@ -81,7 +81,7 @@
                 <div no-caps class="date-mark">
                   <div>
                     <div>{{ item.eventDate.split("/")[0] }}</div>
-                    <div style="font-size: 9px">
+                    <div style="font-size: 12px">
                       {{ monthName(item.eventDate.split("/")[1]) }}
                     </div>
                   </div>
@@ -367,10 +367,12 @@ onMounted(() => {
 .click-event-blue:focus {
   background-color: #efeded80;
   border-radius: 20px;
+  padding: 5px;
   transition: background-color 3s ease;
 }
 .click-event:hover {
   background-color: #dad7d780;
   border-radius: 20px;
+  padding: 5px;
 }
 </style>

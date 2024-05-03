@@ -1,22 +1,23 @@
 <template>
   <q-page>
     <div
-      style="margin-bottom: 80px"
+      style="padding-bottom: 100px"
       :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
     >
-      <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
-        <!-- <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" /> -->
-        <q-img
-          :src="commonStore.eventDetails.eventImg"
-          alt="Snow"
-          style="border-radius: 20px"
-        />
-        <div class="content">
-          <div class="bottom-left">
-            <div class="text-bold text-h6">
-              {{ currentTicket?.EventTitle }}
-            </div>
-            <!-- <div class="avatar-group">
+      <div id="qr-code">
+        <div class="container q-mt-sm q-mx-sm" style="border-radius: 20px">
+          <!-- <q-img src="/bg1.png" alt="Snow" style="border-radius: 20px" /> -->
+          <q-img
+            :src="commonStore.eventDetails.eventImg"
+            alt="Snow"
+            style="border-radius: 20px"
+          />
+          <div class="content">
+            <div class="bottom-left">
+              <div class="text-bold text-h6">
+                {{ currentTicket?.EventTitle }}
+              </div>
+              <!-- <div class="avatar-group">
               <div
                 class="avatar"
                 v-for="(user, index) in users?.slice(0, 3)"
@@ -26,70 +27,66 @@
               </div>
               <div class="q-mt-sm q-pl-sm">10+ interested</div>
             </div> -->
-          </div>
-          <div class="bottom-right">
-            <div class="text-bold">Accompanied By</div>
-            <div style="font-size: 14px">
-              {{ currentTicket?.AccompaniedBy }}/person
+            </div>
+            <div class="bottom-right">
+              <div class="text-bold">Accompanied By</div>
+              <div style="font-size: 14px">
+                {{ currentTicket?.AccompaniedBy }}/person
+              </div>
             </div>
           </div>
         </div>
+        <div
+          class="q-px-md q-mx-sm"
+          :class="$q.dark.isActive ? 'bg-card' : 'bg-grey-2'"
+          style="
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            margin-top: -15px;
+          "
+        >
+          <div class="row q-pa-sm q-pt-md justify-between">
+            <div>
+              <div class="q-mt-sm">Name</div>
+              <div class="text-bold text-h6">
+                {{ currentTicket?.AttendeeName }}
+              </div>
+            </div>
+            <div class="q-mt-sm">
+              <qrcode-vue :value="commonStore.qrValue" :size="120" level="H" />
+            </div>
+          </div>
+          <div class="row q-pa-sm justify-between">
+            <div class="q-mt-sm">
+              <div>Date</div>
+              <div class="text-bold text-h6">
+                {{ commonStore.eventDetails.eventDate }}
+              </div>
+            </div>
+            <div class="q-mt-sm" v-if="commonStore.eventDetails?.eventTime">
+              <div class="text-right">Time</div>
+              <div class="text-bold text-h6">
+                {{ commonStore.eventDetails.eventTime }}
+              </div>
+            </div>
+          </div>
+          <div class="row q-pa-sm justify-between">
+            <div class="q-mt-sm">
+              <div>Section</div>
+              <div class="text-bold text-h6">---</div>
+            </div>
+            <div class="q-mt-sm">
+              <div>Seat</div>
+              <div class="text-bold text-h6">
+                {{ commonStore.eventDetails.totalseat }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr class="dashed q-mx-lg q-mt-md" />
       </div>
-      <div
-        class="q-px-md q-mx-sm"
-        :class="$q.dark.isActive ? 'bg-card' : 'bg-grey-2'"
-        style="
-          border-bottom-left-radius: 10px;
-          border-bottom-right-radius: 10px;
-          margin-top: -15px;
-        "
-      >
-        <div class="row q-pa-sm q-pt-md justify-between">
-          <div>
-            <div class="q-mt-sm">Name</div>
-            <div class="text-bold text-h6">
-              {{ currentTicket?.AttendeeName }}
-            </div>
-          </div>
-          <div class="q-mt-sm" id="qr-code">
-            <qrcode-vue
-              id="qr-code"
-              :value="commonStore.qrValue"
-              :size="120"
-              level="H"
-            />
-          </div>
-        </div>
-        <div class="row q-pa-sm justify-between">
-          <div class="q-mt-sm">
-            <div>Date</div>
-            <div class="text-bold text-h6">
-              {{ commonStore.eventDetails.eventDate }}
-            </div>
-          </div>
-          <div class="q-mt-sm" v-if="commonStore.eventDetails?.eventTime">
-            <div class="text-right">Time</div>
-            <div class="text-bold text-h6">
-              {{ commonStore.eventDetails.eventTime }}
-            </div>
-          </div>
-        </div>
-        <div class="row q-pa-sm justify-between">
-          <div class="q-mt-sm">
-            <div>Section</div>
-            <div class="text-bold text-h6">---</div>
-          </div>
-          <div class="q-mt-sm">
-            <div>Seat</div>
-            <div class="text-bold text-h6">
-              {{ commonStore.eventDetails.totalseat }}
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="dashed q-mx-lg q-mt-md" />
       <q-card-actions class="q-pt-none" align="center">
-        <div class="text-center q-pt-sm" @click="saveImage">
+        <div class="text-center q-pt-sm" @click="captureAndShare">
           <q-btn class="book-btn" rounded>
             <div class="row text-white">
               <div class="q-mt-xs text-bold">Save as Image</div>
@@ -122,6 +119,7 @@ import { db, collection } from "src/stores/firebase.js";
 import { onSnapshot } from "firebase/firestore";
 import { useCounterStore } from "../stores/example-store";
 import html2canvas from "html2canvas";
+import { Share } from "@capacitor/share";
 const bookedList = ref([]);
 const commonStore = useCounterStore();
 onMounted(() => {
@@ -134,6 +132,66 @@ onMounted(() => {
     });
   });
 });
+const baseImage = ref();
+const captureAndShare = async () => {
+  try {
+    const contentToCapture = document.getElementById("qr-code");
+
+    const canvas = await html2canvas(contentToCapture, {
+      backgroundColor: null,
+      scale: 2,
+    });
+
+    // Convert the canvas to a base64 data URL
+    const imageDataUrl = canvas.toDataURL("image/png");
+
+    // Set baseImage with the base64 image data
+    baseImage.value = imageDataUrl;
+
+    // Convert base64 image data to a Blob object
+    const base64Data = imageDataUrl.split(",")[1];
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/png" });
+
+    // Share the image using Capacitor Share plugin
+    await Share.share({
+      title: "Shared Image",
+      files: [blob], // Pass the Blob object as files
+      mimeType: "image/png",
+    });
+  } catch (error) {
+    console.error("Error capturing and sharing image:", error);
+  }
+};
+// const captureAndShare = async () => {
+//   try {
+//     const contentToCapture = document.getElementById("qr-code");
+//     console.log(contentToCapture);
+
+//     // Use html2canvas to capture the content as an image
+//     const canvas = await html2canvas(contentToCapture, {
+//       backgroundColor: null, // Use the background color of the div
+//       scale: 2, // Increase the scale for better image quality
+//     });
+
+//     // Convert the canvas to a base64 data URL
+//     baseImage.value = canvas.toDataURL("image/png");
+//     console.log(baseImage, "imageDataUrl");
+//     // Share the image using Capacitor Share plugin
+//     await Share.share({
+//       title: "Shared Image",
+//       fileData: baseImage,
+//       mimeType: "image/png",
+//     });
+//   } catch (error) {
+//     console.error("Error capturing and sharing image:", error);
+//   }
+// };
 const saveImage = () => {
   const element = document.getElementById("qr-code");
 

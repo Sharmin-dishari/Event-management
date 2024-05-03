@@ -1,73 +1,69 @@
 <template>
   <q-page padding>
     <div>
-      <div
-        class="container q-mt-md q-mx-sm"
-        :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
-      >
-        <!-- <q-img
-          :src="commonStore.eventDetails.eventImg"
-          alt="Snow"
-          
-        /> -->
-        <q-carousel
-          swipeable
-          animated
-          v-model="slide"
-          :autoplay="autoplay"
-          style="border-radius: 20px; height: 300px"
-          ref="carousel"
-          infinite
+      <div id="event-details">
+        <div
+          class="container q-mt-md q-mx-sm"
+          :style="$q.screen.gt.sm ? 'width: 450px; margin: 0 auto' : ''"
         >
-          <q-carousel-slide
-            v-for="(item, index) in commonStore.eventDetails.imageslide1"
-            :name="index"
-            :key="index"
-            :img-src="item"
-          />
+          <q-carousel
+            swipeable
+            animated
+            v-model="slide"
+            :autoplay="autoplay"
+            style="border-radius: 20px; height: 300px"
+            ref="carousel"
+            infinite
+          >
+            <q-carousel-slide
+              v-for="(item, index) in commonStore.eventDetails.imageslide1"
+              :name="index"
+              :key="index"
+              :img-src="item"
+            />
 
-          <template v-slot:control>
-            <q-carousel-control
-              position="top-right"
-              :offset="[10, 10]"
-              class="q-gutter-xs"
-            >
-              <q-btn
-                push
-                round
-                dense
-                color="orange"
-                text-color="black"
-                icon="arrow_left"
-                @click="$refs.carousel.previous()"
-              />
-              <q-btn
-                push
-                round
-                dense
-                color="orange"
-                text-color="black"
-                icon="arrow_right"
-                @click="$refs.carousel.next()"
-              />
-            </q-carousel-control>
-          </template>
-        </q-carousel>
-        <div class="top-right">
-          <!-- <q-btn icon="bookmark" unelevated dense class="button-bg" /> -->
-        </div>
-        <div class="top-left">
-          <q-btn
-            icon="share"
-            @click="shareOption"
-            unelevated
-            dense
-            class="button-bg"
-          />
-        </div>
-        <div class="content">
-          <div class="bottom-left">
-            <!-- <div class="text-bold text-h6" style="margin-left: -40px">
+            <template v-slot:control>
+              <q-carousel-control
+                position="top-right"
+                :offset="[10, 10]"
+                class="q-gutter-xs"
+              >
+                <q-btn
+                  push
+                  round
+                  dense
+                  color="orange"
+                  text-color="black"
+                  icon="arrow_left"
+                  @click="$refs.carousel.previous()"
+                />
+                <q-btn
+                  push
+                  round
+                  dense
+                  color="orange"
+                  text-color="black"
+                  icon="arrow_right"
+                  @click="$refs.carousel.next()"
+                />
+              </q-carousel-control>
+            </template>
+          </q-carousel>
+          <div class="top-right">
+            <!-- <q-btn icon="bookmark" unelevated dense class="button-bg" /> -->
+          </div>
+          <div class="top-left">
+            <q-btn
+              icon="share"
+              @click="captureAndShare"
+              unelevated
+              dense
+              class="button-bg"
+            />
+          </div>
+          <div class="content">
+            <div class="bottom-left">
+              <!-- <div class="text-bold text-h6" style="margin-left: -40px">
               {{ commonStore.eventDetails.eventTitle }}
             </div>
             <div class="avatar-group">
@@ -80,57 +76,59 @@
               </div>
               <div class="q-mt-sm q-pl-sm">10+ interested</div> 
             </div> -->
-          </div>
-          <div class="bottom-right">
-            <div no-caps class="date-mark">
-              <div>
-                <div class="text-bold text-h6">
-                  {{ commonStore.eventDetails?.eventDate?.split("/")[0]
-                  }}<sup>th</sup>
-                </div>
-                <div style="font-size: 11px" class="q-mt-xs">
-                  {{
-                    monthName(
-                      commonStore.eventDetails?.eventDate?.split("/")[1]
-                    )
-                  }}
+            </div>
+            <div class="bottom-right">
+              <div no-caps class="date-mark">
+                <div>
+                  <div class="text-bold text-h6">
+                    {{ commonStore.eventDetails?.eventDate?.split("/")[0]
+                    }}<sup>th</sup>
+                  </div>
+                  <div style="font-size: 11px" class="q-mt-xs">
+                    {{
+                      monthName(
+                        commonStore.eventDetails?.eventDate?.split("/")[1]
+                      )
+                    }}
+                  </div>
                 </div>
               </div>
+              <!-- <div class="text-bold text-h6">$125</div> -->
+              <!-- <div style="font-size: 9px">1/person</div> -->
+              <div style="font-size: 11px" class="q-mt-sm text-right">
+                {{
+                  commonStore.eventDetails.totalseat -
+                  commonStore.ticketBookingList?.length
+                }}
+                / +Available
+              </div>
             </div>
-            <!-- <div class="text-bold text-h6">$125</div> -->
-            <!-- <div style="font-size: 9px">1/person</div> -->
-            <div style="font-size: 11px" class="q-mt-sm text-right">
-              {{
-                commonStore.eventDetails.totalseat -
-                commonStore.ticketBookingList?.length
-              }}
-              / +Available
+          </div>
+        </div>
+        <div class="title-font q-my-md q-px-sm">
+          {{ commonStore.eventDetails.eventTitle }}
+        </div>
+        <div class="q-ma-sm row q-py-md">
+          <q-btn icon="calendar_month" unelevated dense class="button-border" />
+          <div class="q-ml-md">
+            <div>
+              {{ changeDateFormat(commonStore.eventDetails.eventDate) }}
+            </div>
+            <div class="text-caption">
+              {{ commonStore.eventDetails.eventTime }}
             </div>
           </div>
         </div>
-      </div>
-      <div class="title-font q-my-md q-px-sm">
-        {{ commonStore.eventDetails.eventTitle }}
-      </div>
-      <div class="q-ma-sm row q-py-md">
-        <q-btn icon="calendar_month" unelevated dense class="button-border" />
-        <div class="q-ml-md">
-          <div>{{ changeDateFormat(commonStore.eventDetails.eventDate) }}</div>
-          <div class="text-caption">
-            {{ commonStore.eventDetails.eventTime }}
+        <div class="q-ma-sm row" @click="shareLocation">
+          <q-btn icon="pin_drop" unelevated dense class="button-border" />
+          <div class="q-ml-md">
+            <div class="text-caption q-mt-sm">
+              {{ commonStore.eventDetails.eventLocation }}
+            </div>
           </div>
         </div>
+        <div class="divider div-transparent q-mt-lg"></div>
       </div>
-      <div class="q-ma-sm row" @click="shareLocation">
-        <q-btn icon="pin_drop" unelevated dense class="button-border" />
-        <div class="q-ml-md">
-          <!-- <div>Gala Convention Center</div> -->
-          <div class="text-caption q-mt-sm">
-            {{ commonStore.eventDetails.eventLocation }}
-          </div>
-        </div>
-      </div>
-      <div class="divider div-transparent q-mt-lg"></div>
       <div class="text-center q-py-md text-h6 text-bold">Event Sponsors</div>
       <div
         class="row justify-between flex-center q-px-sm"
@@ -244,9 +242,10 @@ import { date as qdate } from "quasar";
 import { ref, onMounted } from "vue";
 import { useCounterStore } from "../stores/example-store";
 import InviteFriends from "../components/InviteFriends.vue";
+import html2canvas from "html2canvas";
 const commonStore = useCounterStore();
-// import { Share } from "@capacitor/share";
-// import { StartNavigation } from "@proteansoftware/capacitor-start-navigation";
+import { Share } from "@capacitor/share";
+import { StartNavigation } from "@proteansoftware/capacitor-start-navigation";
 const slide = ref(1);
 const autoplay = ref(true);
 const carousel = ref();
@@ -258,24 +257,51 @@ const monthName = (monthNumber) => {
     month: "long",
   });
 };
+const baseImage = ref();
+const captureAndShare = async () => {
+  try {
+    const contentToCapture = document.getElementById("event-details");
 
-const shareOption = async () => {
-  await Share.share({
-    title: "See cool stuff",
-    text: "Really awesome thing you need to see right meow",
-    url: "http://ionicframework.com/",
-    dialogTitle: "Share with buddies",
-  });
+    const canvas = await html2canvas(contentToCapture, {
+      backgroundColor: null,
+      scale: 2,
+    });
+
+    // Convert the canvas to a base64 data URL
+    const imageDataUrl = canvas.toDataURL("image/png");
+
+    // Set baseImage with the base64 image data
+    baseImage.value = imageDataUrl;
+
+    // Convert base64 image data to a Blob object
+    const base64Data = imageDataUrl.split(",")[1];
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: "image/png" });
+
+    // Share the image using Capacitor Share plugin
+    await Share.share({
+      title: "Shared Image",
+      files: [blob], // Pass the Blob object as files
+      mimeType: "image/png",
+    });
+  } catch (error) {
+    console.error("Error capturing and sharing image:", error);
+  }
 };
 const shareLocation = () => {
   StartNavigation.launchMapsApp({
     address: {
-      street: "Market Place",
-      city: "Warwick",
-      postalCode: "CV34 4SA",
-      Country: "United Kingdom",
+      street: commonStore.eventDetails.eventLocation,
+      city: "",
+      postalCode: "",
+      Country: "",
     },
-    name: "Example location",
+    name: "Navigate to Event location",
   });
 };
 const inviteFrnds = ref(false);

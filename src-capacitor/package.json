@@ -14,6 +14,7 @@
     "@capacitor/share": "^6.0.0",
     "@eoscz/capacitor-plugin-native-file-downloader": "^2.0.1",
     "@proteansoftware/capacitor-start-navigation": "^5.0.0",
-    "firebase": "^10.11.1"
+    "firebase": "^10.11.1",
+    "html2canvas": "^1.4.1"
   }
 }

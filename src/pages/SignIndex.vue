@@ -270,6 +270,12 @@ const signInWithGoogle = async () => {
     commonStore.handleUserAuthInfo(result.credential);
     myinfo.value = result.user;
     router.push({ name: "dashboard" });
+    $q.notify({
+      color: "green",
+      textColor: "white",
+      icon: "emoji_emotions",
+      message: "Logged in sucsessfully",
+    });
   });
 };
 const router = useRouter();
